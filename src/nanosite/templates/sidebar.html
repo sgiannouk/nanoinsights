@@ -1,0 +1,75 @@
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <title>Your NanoString Analysis Tool</title> -->
+    <!-- Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/sidebar_style.css' %}">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="#"> <!-- Link to your home.html page -->
+                <img src="{% static 'images/logo.png' %}" alt="nStringAnalysis Logo">
+            </a>
+        </div>
+        <!-- Burger Icon for Sidebar Collapse -->
+        <button class="btn btn-dark d-md-none" id="sidebarCollapse">
+            <i class="bi bi-list"></i>
+        </button>
+        <!-- Sidebar Tabs -->
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    Getting Started
+                </a>
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="#">How to use?</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Video Tutorial</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Run our example</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Our repository</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">My Analysis</a>
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="#">QC and Exploratory Analysis</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Normalisation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Differential Expression</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Classification</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Enrichment Analysis</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Find my project</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Website Stats</a>
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"><a class="nav-link" href="#">Contact us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Report an issue</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Give Us feedback</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Cite Us</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Page Content -->
+    <div class="content">
+        <!-- Your webpage content goes here -->
+    </div>
+
+    <!-- Bootstrap and Custom JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>

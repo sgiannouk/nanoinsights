@@ -1,0 +1,27 @@
+/* Style the jumbotron header */
+
+.jumbotron {
+background-color: #f8f9fa;
+padding: 2rem;
+text-align: center;
+}
+
+/* Style the citation box */
+.cite-box {
+background-color: #ffffff;
+border: 1px solid #dee2e6;
+border-radius: 5px;
+padding: 20px;
+margin: 20px auto;
+max-width: 600px;
+}
+
+/* Center the content in the box */
+.cite-content {
+text-align: center;
+}
+
+/* Add some space between the citation text and the button */
+.cite-button {
+margin-top: 20px;
+}
