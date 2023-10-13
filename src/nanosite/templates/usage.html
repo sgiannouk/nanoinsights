@@ -52,8 +52,7 @@
             Subsequently, you'll gain access to a detailed data table that provides a comprehensive overview of the performance of each sample in your dataset. This serves as a valuable resource for assessing the quality and reliability of your data.
         </p>
         <p>
-            Following the initial QC phase, a meticulous exploratory analysis will be conducted. This analysis includes several key components: a box plot of the raw data, a Principal Component Analysis (PCA) plot (for further details, please see the 
-            <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">PCA explanation</a>), and an Interquartile Range (IQR) analysis (for additional information, please refer to the <a href="https://en.wikipedia.org/wiki/Interquartile_range">IQR explanation</a>). These analytical methods are crucial in identifying potential outlier samples within your data and detecting any batch effects that may be present.
+            Following the initial QC phase, a meticulous exploratory analysis will be conducted. This analysis includes several key components: a box plot of the raw data, a Principal Component Analysis (<a href="https://en.wikipedia.org/wiki/Principal_component_analysis">PCA</a>), and an Interquartile Range (<a href="https://en.wikipedia.org/wiki/Interquartile_range">IQR</a>) analysis. These analytical methods are crucial in identifying potential outlier samples within your data and detecting any batch effects that may be present.
         </p>
     </section>
 
@@ -64,19 +63,19 @@
             Users have the flexibility to apply various standard gene and sample filters, accessible through the "Filters" section on the home page of NANOinsights. Four main filters can be activated to refine your data:
 
             <ul> 
-                <b>Filter Lowly Expressed Genes:</b> This filter utilizes the edgeR function "filterByExpr" to statistically identify and eliminate genes with low expression levels, enhancing the overall quality of your data.
+                <b>Filter Lowly Expressed Genes:</b> This filter utilizes the edgeR function "<a href="https://rdrr.io/bioc/edgeR/man/filterByExpr.html">filterByExpr</a>" to statistically identify and eliminate genes with low expression levels, enhancing the overall quality of your data.
             </ul>
             <ul>
-                <b>Filter Genes Based on Negative Controls:</b> In this filter, Negative Control (NC) probes in your assay are employed to screen out targets with inadequate expression and high background noise. Initially, the background noise is computed by taking the mean of each sample's NC, increased by two times the standard deviation, and then subtracted from each sample. Any transcript with a score of less than or equal to 0 in over 75% of the examined samples is excluded from further analysis.
+                <b>Filter Genes Based on Negative Controls:</b> In this filter, Negative Control (<a href="https://nanostring.com/wp-content/uploads/Gene_Expression_Data_Analysis_Guidelines.pdf">NC</a>) probes in your assay are employed to screen out targets with inadequate expression and high background noise. Initially, the background noise is computed by taking the mean of each sample's NC, increased by two times the standard deviation, and then subtracted from each sample. Any transcript with a score of less than or equal to 0 in over 75% of the examined samples is excluded from further analysis.
             </ul>
             <ul>
                 <b>Filter Samples Based on the Negative Controls:</b> Extending the approach of the second filter, the third filter pertains to "Filter Samples Based on the Negative Controls." In this filter, samples are excluded if over 85% of the genes fail to meet the criteria established in the previous step.
             </ul>
             <ul>
-                <b>Remove Outlier Samples:</b> This filter is grounded in the Interquartile Range (IQR) analysis. Samples identified as outliers in the IQR analysis are removed from downstream analysis.
+                <b>Remove Outlier Samples:</b> This filter is grounded in the IQR analysis. Samples identified as outliers in the IQR analysis are removed from downstream analysis.
             </ul>
 
-            If any of these filtering steps are applied, your data will undergo re-evaluation using a Principal Component Analysis (PCA) plot.
+            If any of these filtering steps are applied, your data will undergo re-evaluation using a PCA plot.
         </p>
     </section>
 
@@ -84,10 +83,10 @@
     <section class="usage-section">
         <h2>Normalisation and Differential Expression</h2>
         <p>
-            The user has the flexibility to select the preferred type of normalisation for their data. In the "Differential Expression" section, users can choose from a diverse range of normalisation methods, offering BLAH options, with the default choice set to BLAH. Additionally, for the differential expression (DE) analysis, users have the ability to specify the log2 Fold Change Threshold and the (adjusted) p-value according to their research needs.
+            The user has the flexibility to select the preferred type of normalisation for their data. In the "Differential Expression" section, users can choose from a diverse range of normalisation methods, offering <font color="red">BLAH</font> options, with the default choice set to <font color="red">BLAH</font>. Additionally, for the differential expression (DE) analysis, users have the ability to specify the log2 Fold Change Threshold and the (adjusted) p-value according to their research needs.
         </p>
         <p>
-            Once the choice of normalisation method and the specification of cutoff values are made, the DE analysis seamlessly commences. This analysis yields a comprehensive output that encompasses a data table featuring normalised counts and complementary statistical metrics. In addition to the tabular data, interactive visualisations take centre stage, including a Relative log expression (RLE) plot (see <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5798764/">RLE explanation</a>) and a Volcano plot (see <a href="https://en.wikipedia.org/wiki/Volcano_plot_(statistics)">Volcano plot explanation</a>). Furthermore, a heat map is generated to display the selected DE genes.
+            Once the choice of normalisation method and the specification of cutoff values are made, the DE analysis seamlessly commences. This analysis yields a comprehensive output that encompasses a data table featuring normalised counts and complementary statistical metrics. In addition to the tabular data, interactive visualisations take centre stage, including a Relative log expression (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5798764/">RLE</a>) plot and a <a href="https://en.wikipedia.org/wiki/Volcano_plot_(statistics)">Volcano plot</a>.
         </p>
     </section>
 
@@ -95,8 +94,16 @@
     <section class="usage-section">
         <h2>Supervised Learning</h2>
         <p>
-            Aliquam ut aliquam nulla. Cras pharetra odio quis turpis auctor, non
-            tincidunt risus fringilla. Ut auctor, dolor eu euismod cursus, dolor mi maximus.
+            The normalised counts are the foundation for the subsequent classification. In the classification process, several key steps are undertaken. Firstly, the data may undergo optional pre-processing, including the removal of highly correlated and quasi-constant genes, and optional feature selection. Subsequently, one or more chosen machine learning algorithms are trained using the training data to learn how to assign class labels. The models are rigorously evaluated using cross-validation techniques, and ultimately, they make predictions on the unseen validation set.
+        </p>
+        <p>
+            At the outset, users can decide whether they want to eliminate highly correlated and quasi-constant genes, with these options available in the "Advanced Options" section. Next, users have three feature selection choices: "Recursive Feature Elimination" (<a href="https://machinelearningmastery.com/rfe-feature-selection-in-python/">RFE</a>), "Differentially Expressed genes," or no feature selection, with RFE set as the default. If RFE is selected, users have the additional choice of using leave-one-out cross-validation (LOOCV), 5-fold cross-validation (5-fold CV), or 10-fold cross-validation (10-fold CV), and they can specify the minimum number of genes for RFE.
+        </p>
+        <p>
+            Following these choices, users can select one or more of the four provided machine learning algorithms for classification: Random Forest (<a href="https://en.wikipedia.org/wiki/Random_forest">RF</a>), which is the default option, K-Nearest Neighbors (<a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">KNN</a>), Gradient Boosting ( <a href="https://en.wikipedia.org/wiki/Gradient_boosting">GB</a>), or <a href="https://towardsdatascience.com/what-when-how-extratrees-classifier-c939f905851c">Extra Trees</a> Classifier. Multiple classifiers can be chosen for the task.
+        </p>
+        <p>
+            The output of the classification process encompasses a range of valuable results. These include a plot indicating the optimal number of features based on RFE, a table identifying the selected features, a file with comprehensive details and statistics regarding the filtering, feature selection, and training process, as well as data tables that provide a detailed listing of the classification output for both the training and test sets. Additionally, several visualisations are made available, such as <a href="https://towardsdatascience.com/introduction-to-probabilistic-classification-a-machine-learning-perspective-b4776b469453">class probabilities</a> plot, a confusion matrix (<a href="https://en.wikipedia.org/wiki/Confusion_matrix">CM</a>) heatmap, and a Receiver Operating Characteristic (<a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">ROC</a>) plot, which collectively enhance the understanding and interpretation of the classification results.
         </p>
     </section>
 
@@ -104,8 +111,7 @@
     <section class="usage-section">
         <h2>Enrichment Analysis</h2>
         <p>
-            Aliquam ut aliquam nulla. Cras pharetra odio quis turpis auctor, non
-            tincidunt risus fringilla. Ut auctor, dolor eu euismod cursus, dolor mi maximus.
+            Gene set enrichment analysis (GSEA) is conducted in two phases as part of our process. First, it is performed on the differentially expressed genes, and then it is repeated on the selected features when the RFE feature selection method is chosen. For these analyses, we leverage the power of <a href="https://biit.cs.ut.ee/gprofiler/"gProfiler></a> and g:GOSt, which are instrumental in performing functional enrichment analysis. This type of analysis, also known as over-representation analysis (ORA) or gene set enrichment analysis, is instrumental in uncovering biological insights within the input gene lists. It achieves this by mapping genes to established functional information sources and subsequently identifying statistically significant enrichment of specific terms. Notably, g:GOSt regularly retrieves data from the <a href="https://www.ensembl.org/index.html">Ensembl database</a>, ensuring that the analysis is built upon the latest and most comprehensive functional information available.
         </p>
     </section>
 
@@ -113,8 +119,10 @@
     <section class="usage-section">
         <h2>Output and Download of Results</h2>
         <p>
-            Aliquam ut aliquam nulla. Cras pharetra odio quis turpis auctor, non
-            tincidunt risus fringilla. Ut auctor, dolor eu euismod cursus, dolor mi maximus.
+            Upon the completion of the analysis, all the aforementioned files, tables, and visualisations are made accessible for download, allowing you to save them locally on your computer. These files and tables are compatible with widely-used software like Microsoft Excel and Word, ensuring ease of access and utilisation.
+        </p>
+        <p>
+            Furthermore, all interactive plots are thoughtfully transformed into high-resolution static figures, making them readily suitable for presentations and inclusion in scientific papers. This ensures that the valuable insights gained from your analysis can be effectively communicated and shared within the scientific community and beyond.
         </p>
     </section>
 
@@ -130,6 +138,9 @@
             </li>
             <li>
                 <b>Group-comparison:</b> NANOinsights is tailored to facilitate precise two-group comparisons within your data. Please note that our software does not support the analysis of more than two groups from the clinical data file. If your clinical data contains more than two groups, our software will not be able to run the analysis effectively.
+            </li>
+            <li>
+                It's important to note that every option within the NANOinsights website is equipped with comprehensive explanations that become instantly accessible when you hover over the respective option's titles. This user-friendly feature ensures that users can access detailed information and guidance at their fingertips, enhancing their understanding of the available choices and facilitating a smoother and more informed analysis process.
             </li>
             <li>
                 <b>Additional Parameter Information:</b> For in-depth information about the various parameters and settings available in NANOinsights, we invite you to explore our <a href="https://github.com/sgiannouk/nanoinsights">GitHub repository</a>. There, you'll find a comprehensive and detailed explanation of each parameter, offering valuable insights into their functionality and how to best utilise them for your specific needs.

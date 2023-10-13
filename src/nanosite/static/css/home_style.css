@@ -47,3 +47,15 @@
 #edgernormselection {
     display: none;
 }
+
+#rfecrossvalopt {
+    display: none;
+}
+
+#minfeatureopt {
+    display: none;
+}
+
+#crossvalopt {
+    display: none;
+}

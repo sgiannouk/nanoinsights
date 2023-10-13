@@ -39,3 +39,31 @@ document.getElementById("norm").addEventListener("change", function() {
         edgernormSelection.style.display = "none"; // Hide the section
     }
 });
+
+
+// Get references to the relevant elements
+const featureSelectionDropdown = document.getElementById("featureselection");
+const rfecrossvalField = document.getElementById("rfecrossvalopt");
+const minfeatureField = document.getElementById("minfeatureopt");
+
+// Function to show/hide the fields based on the selected value
+function toggleFields() {
+    if (featureSelectionDropdown.value === "RFE") {
+        rfecrossvalField.style.display = "block";
+        minfeatureField.style.display = "block";
+    } else {
+        rfecrossvalField.style.display = "none";
+        minfeatureField.style.display = "none";
+    }
+}
+
+// Add an event listener to the "featureselection" dropdown
+featureSelectionDropdown.addEventListener("change", toggleFields);
+
+// Initially, call the toggleFields function to set the initial state
+toggleFields();
+
+
+
+
+
