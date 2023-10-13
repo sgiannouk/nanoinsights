@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+/* h1 {
+    color: red;
+} */
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    font-family: 'Poppins', sans-serif;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 200px; /* Adjust the width as needed */
+    background-color: #F5F0BB;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 0px; /* Space for logo and header */
+}
+
+.sidebar.collapsed {
+    width: 60px; /* Collapsed width */
+}
+
+/* Sidebar Logo */
+.logo {
+    margin-top: 25px; 
+    margin-bottom: 30px; 
+    text-align: center;
+    padding: 10px 0;
+}
+
+.logo img {
+    max-width: 80%; /* Adjust the logo size as needed */
+    display: block;
+    margin: 0 auto;
+}
+
+/* Sidebar Navigation */
+.sidebar ul.nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar ul.nav li {
+    padding: 10px 15px;
+}
+
+.sidebar ul.nav li a {
+    text-decoration: none;
+    color: #675D50;
+    transition: 0.3s;
+}
+
+.sidebar ul.nav li a:hover {
+    color: #90be6d; /* Highlight color on hover */
+}
+
+/* Sidebar Toggle Button */
+#sidebarCollapse {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+}
+
+#sidebarCollapse i {
+    font-size: 24px;
+    color: #fff;
+}
+
+/* Submenu Styles */
+.sidebar ul.sub-menu {
+    display: none;
+    padding-left: 20px;
+}
+
+.sidebar ul.nav li:hover ul.sub-menu {
+    display: block;
+}
+
+#search-bar {
+    display: none;
+    position: sticky;
+    padding-left: 10px;
+    color: #9ca3af;
+    font-size: 10px;
+}
+
+#search-bar input[type="text"] {
+        width: 180px; /* Adjust the width as needed */
+        height: 40px; /* Adjust the height as needed */
+        font-size: 14px; /* Adjust the font size as needed */
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        margin-top: -10px;
+        flex: 1;
+    }
+
+#search-bar button {
+    height: 25px; /* Adjust the height to match the input field */
+    width: 60px;
+    font-size: 12px; /* Adjust the font size as needed */
+    border-radius: 5px;
+    margin-top: 5px;
+    background-color: #176B87;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+#search-bar input[type="text"]::placeholder {
+    font-size: 14px;
+    text-align: center;
+}

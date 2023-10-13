@@ -1,0 +1,24 @@
+
+#roadtitle{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 60px;
+}
+
+#roadmapimage {
+    height: auto;
+    max-width: 90%; /* Adjust the logo size as needed */
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 100px;
+}
+
+.usage-section a {
+    color: #737373;
+    text-decoration: none;
+}
+
+.usage-section a:hover {
+    color: #016A70;
+    text-decoration: none;
+}

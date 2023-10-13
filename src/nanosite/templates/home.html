@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cite Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
+</head>
+
+<body>
+    <!-- <h1>HOME PAGE</h1> -->
+<div class="container">
+    <div class="jumbotron">
+        <h1 class="display-4">Upload Your Data</h1>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <!-- Left Box -->
+        <div class="col-md-6 container-left">
+            
+            <!-- Upload Data -->
+            <div class="form-group">
+                <label for="dataUpload" 
+                title="Help text for dataUpload"
+                >Enter Your NanoString Raw Data</label>
+                <input type="file" class="form-control-file" id="dataUpload" accept=".RCC, .rcc, .zip">
+            </div>
+
+            <!-- Upload Clinical Data -->
+            <div class="form-group">
+                <label for="clinicalDataUpload" 
+                title=""
+                >Enter Your Clinical Data Table</label>
+                <input type="file" class="form-control-file" id="clinicalDataUpload" accept=".csv, .txt, .tab">
+            </div>
+            
+            <!-- CONDITION and CONTROL Groups -->
+            <div class="form-group">
+                <label for="control" 
+                title=""
+                >Select Your Control Group</label>
+                <input type="text" class="form-control" id="control">
+            </div>
+            <div class="form-group">
+                <label for="condition" 
+                title=""
+                >Select Your Condition Group</label>
+                <input type="text" class="form-control" id="condition">
+            </div>
+            
+            <!-- Validation Type -->
+            <div class="form-group">
+                <label for="validationType"
+                title="" 
+                >Select the Machine Learning Validation Type</label>
+                <select class="form-select" id="validationType">
+                    <option select value="split">Split</option>
+                    <option value="run">Runs</option>
+                    <option value="extSet">External Set</option>
+                    <option value="noVS">No Validation Set</option>
+                </select>
+            </div>
+            
+            <!-- Run Selection (Hidden by default) -->
+            <div class="form-group" id="runBox">
+                <label for="run"
+                title=""
+                >Select Run/Runs</label>
+                <select class="form-select" id="run">
+                    <!-- Add options for runs here -->
+                </select>
+            </div>
+
+            <!-- External Set (Hidden by default) -->
+            <div class="form-group" id="extRawBox">
+                <label for="extSetData"
+                title=""
+                >Enter Your NanoString External Set Raw Data</label>
+                <input type="file" class="form-control-file" id="extSetData" accept=".RCC, .rcc, .zip">
+            </div>
+
+            <!-- External Set (Hidden by default) -->
+            <div class="form-group" id="extClinicalBox">
+                <label for="extClinicalData"
+                title=""
+                >Enter Your NanoString External Set Clinical Data</label>
+                <input type="file" class="form-control-file" id="extClinicalData" accept=".csv, .txt, .tab">
+            </div>
+        </div>
+        
+        
+        <!-- Right Box -->
+        <div class="col-md-6 container-right">
+            <!-- Filters -->
+            <h3>Filters</h3>
+            <div class="form-group">
+                <label for="filter_lowlyExpr_genes" 
+                title=""
+                >Filter Lowly Expressed Genes</label>
+                <select class="form-select" id="filter_lowlyExpr_genes">
+                    <option value="true">True</option>
+                    <option selected value="false">False</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="filter_genes_on_negCtrl" 
+                title=""
+                >Filter Genes Based on Negative Controls</label>
+                <select class="form-select" id="filter_genes_on_negCtrl">
+                    <option selected value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="filter_samples_on_negCtrl"
+                title=""
+                >Filter Samples Based on the Negative Controls</label>
+                <select class="form-select" id="filter_samples_on_negCtrl">
+                    <option value="true">True</option>
+                    <option selected value="false">False</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="remove_outlier_samples" 
+                title="Remove Outlier Samples Based on IQR analysis"
+                >Remove Outlier Samples</label>
+                <select class="form-select" id="remove_outlier_samples">
+                    <option selected value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="iqrcutoff" 
+                title=""
+                >IQR Cutoff</label>
+                <input type="number" step="0.5" class="form-control" id="iqrcutoff" value="1.5">
+            </div>
+
+            <!-- Differential Expression -->
+            <h3>Differential Expression</h3>
+            <div class="form-group">
+                <label for="norm" id="normselection" 
+                title=""
+                >Select Your Normalisation Method</label>
+                <select class="form-select" id="norm">
+                    <option selected value="DESeq2">DESeq2</option>
+                    <option value="edger">edgeR</option>
+                    <option value="ruvdeseq">RUVDESeq2</option>
+                    <option value="ruvedger">RUVedgeR</option>
+                </select>
+            </div>
+
+            <!-- edgernormselection (Hidden by default) -->
+            <div class="form-group" id="edgernormselection">
+                <label for="edgernorm" 
+                title=""
+                >Select the Type of edgeR Normalization Method</label>
+                <select class="form-select" id="edgernorm">
+                    <option selected value="upperquartile">Upper Quartile</option>
+                    <option value="tmm">TMM</option>
+                    <option value="tmmwsp">TMMwsp</option>
+                    <option value="rle">RLE</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="lfcthreshold" 
+                title=""
+                >Select the log2 Fold Change Threshold</label>
+                <input type="number" step="0.5" class="form-control" id="lfcthreshold" value="1" min="0.1">
+            </div>
+
+            <div class="form-group">
+                <label for="padjusted" 
+                title=""
+                >Select the adjusted p-value</label>
+                <input type="number" step="0.01" class="form-control" id="padjusted" value="0.05" min="0" max="1">
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Box -->
+    <div class="container-advanced">
+        <h2>Advanced Options</h2>
+        
+        <!-- ML options -->
+        <div class="form-group">
+            <label for="correlated" 
+            title=""
+            >Filter Highly Correlated Genes</label>
+                <select class="form-select" id="correlated">
+                    <option value="true">True</option>
+                    <option selected value="false">False</option>
+                </select>
+        </div>
+
+        <div class="form-group">
+            <label for="quasiconstant" 
+            title=""
+            >Filter Quasi-constant Genes</label>
+                <select class="form-select" id="quasiconstant">
+                    <option value="true">True</option>
+                    <option selected value="false">False</option>
+                </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="featureselection" 
+            title=""
+            >Select Feature Selection Method</label>
+            <select class="form-select" id="featureselection" name="featureselection">
+                <option selected value="RFE">Recursive Feature Elimination</option>
+                <option value="DE">Differentially Expressed genes</option>
+                <option value="noFS">no Feature Selection</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="rfecrossval" 
+            title=""
+            >Option for Recursive Feature Elimination Cross-Validation</label>
+            <select class="form-select" id="rfecrossval" name="rfecrossval">
+                <option selected value="LOOCV">leave one out cross validation</option>
+                <option value="5CV">5-fold cross validation</option>
+                <option value="10CV">10-fold cross validation</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="minfeature" 
+            title=""
+            >Minimum Number of Features to Be Selected</label>
+            <input type="number" class="form-control" id="minfeature" name="minfeature" step="1" value="5">
+        </div>
+        
+        <div class="form-group">
+            <label for="classifiers" 
+            title=""
+            >Select Classifier/Classifiers</label>
+            <select class="form-select" id="classifiers" name="classifiers" multiple>
+                <option selected value="RF">Random Forest</option>
+                <option value="KNN">k-Nearest Neighbors</option>
+                <option value="GB">Gradient Boosting</option>
+                <option value="ET">Extra Trees</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="crossval" 
+            title=""
+            >Cross-Validation Option for Final Evaluation</label>
+            <select class="form-select" id="crossval" name="crossval">
+                <option value="LOOCV">leave one out cross validation</option>
+                <option value="3CV">3-fold cross validation</option>
+                <option selected value="5CV">5-fold cross validation</option>
+                <option value="10CV">10-fold cross validation</option>
+            </select>
+        </div>
+
+        <!-- RUVSeq options -->
+        <h3>RUVSeq Options</h3>
+        <div class="form-group">
+            <label for="k_factor" 
+            title=""
+            >k factor<i class="bi bi-question-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="This is the explanation of the k Factor argument."></i></label>
+            <input type="number" class="form-control" id="k_factor" name="k_factor" step="1" value="1">
+        </div>
+        
+        <div class="form-group">
+            <label for="refgenes"
+            title=""
+            >How to Choose Reference Genes for RUVSeq Analysis?</label>
+            <select class="form-select" id="refgenes" name="refgenes">
+                <option selected value="endNhk">Endogenous and Housekeeping targets</option>
+                <option value="end">Endogenous targets</option>
+                <option value="hk">Housekeeping targets</option>
+                <option value="posCtrl">Positive Controls</option>
+            </select>
+        </div>
+    </div>
+</div>
+    
+    <!-- Include Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/home_script.js' %}"></script>
+
+</body>
+</html>
+{% endblock %}

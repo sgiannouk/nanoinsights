@@ -1,0 +1,164 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to use?</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/usage_style.css' %}">
+</head>
+<body>
+    <div class="container">
+    <h1 id="roadtitle">NANOinsights Roadmap</h1>
+
+    <img id="roadmapimage" src="{% static 'img/scheme.png' %}" alt="Roadmap scheme">
+
+    <!-- Section 1: Uploading Data -->
+    <section class="usage-section">
+        <h2>Uploading your Data</h2>
+        <p>
+            NANOinsights simplifies the data submission process for our users, welcoming nCounter raw data in the RCC format. To enhance convenience, you have the option to upload RCC files individually or consolidate them into a single zipped file for submission. Additionally, we require a clinical sample information table to accompany your data for comprehensive analysis.
+        </p>
+        </p>
+            The clinical information should be provided in a tab-delimited format, with both TXT and TAB formats being acceptable. This table should contain the following headers: "filename," "condition," and, optionally, "stage." In cases where the "stage" information is not available, kindly populate the column with "NA" to indicate its absence.
+        </p>
+    </section>
+
+    <!-- Section 2: Fine-Tuning Parameters -->
+    <section class="usage-section">
+        <h2>Fine-Tuning Parameters</h2>
+        <p>
+            When using NANOinsights, you will encounter four distinct sets of parameters that play a pivotal role in guiding your data analysis journey. Within the NANOinsights platform, key parameters reside within the "Upload Your Data" section. The most critical selections in this category are "Select Your Control Group" and "Select Your Condition Group." These choices, guided by your clinical data, lay the foundation for your differential expression analysis, significantly influencing the insights you'll extract.
+        </p>
+        <p>
+            Another essential parameter is "Select the Machine Learning Validation Type," which offers multiple options for validating the classification process. The default choice is "Split," where your data is divided into an 80-20% split for training and validation. You can also opt for "Runs," allowing you to select all samples from a specific run (loaded in a single cartridge) as your validation set, while the rest serve as the training set. Note that when choosing "Runs," an additional box appears for selecting one or more runs. Alternatively, there's the "External Set" option, which prompts you to upload extra raw and clinical data for use as a validation set. Lastly, although available, it's important to highlight that "No Validation Set" is not recommended, as it could introduce bias into the classification process.
+        </p>
+        <p>  
+            For an in-depth understanding of each parameter, you can conveniently access detailed descriptions and explanations by hovering over their titles, ensuring a well-informed and precise analysis process tailored to your specific research needs.
+        </p>
+    </section>
+
+    <!-- Section 3: QC and Exploratory Analysis -->
+    <section class="usage-section">
+        <h2>Quality Control and Exploratory Analysis</h2>
+        <p>
+            After you've successfully uploaded your data and fine-tuned the parameters or kept the default settings, NANOinsights will initiate an initial quality control (QC) process. This includes the execution of NanoString's standard general assay performance QC, encompassing Imaging, Binding Density, Positive Control Linearity, and Limit of Detection. For a deeper dive into each of these metrics, you can refer to <a href="https://www.youtube.com/watch?v=p68gui4bMos&ab_channel=NanoString">NanoString's Guidelines</a>, which offer comprehensive insights into the analysis of each parameter.
+        </p>
+        <p>
+            Subsequently, you'll gain access to a detailed data table that provides a comprehensive overview of the performance of each sample in your dataset. This serves as a valuable resource for assessing the quality and reliability of your data.
+        </p>
+        <p>
+            Following the initial QC phase, a meticulous exploratory analysis will be conducted. This analysis includes several key components: a box plot of the raw data, a Principal Component Analysis (PCA) plot (for further details, please see the 
+            <a href="https://en.wikipedia.org/wiki/Principal_component_analysis">PCA explanation</a>), and an Interquartile Range (IQR) analysis (for additional information, please refer to the <a href="https://en.wikipedia.org/wiki/Interquartile_range">IQR explanation</a>). These analytical methods are crucial in identifying potential outlier samples within your data and detecting any batch effects that may be present.
+        </p>
+    </section>
+
+    <!-- Section 4: Filtering steps -->
+    <section class="usage-section">
+        <h2>Filtering</h2>
+        <p>
+            Users have the flexibility to apply various standard gene and sample filters, accessible through the "Filters" section on the home page of NANOinsights. Four main filters can be activated to refine your data:
+
+            <ul> 
+                <b>Filter Lowly Expressed Genes:</b> This filter utilizes the edgeR function "filterByExpr" to statistically identify and eliminate genes with low expression levels, enhancing the overall quality of your data.
+            </ul>
+            <ul>
+                <b>Filter Genes Based on Negative Controls:</b> In this filter, Negative Control (NC) probes in your assay are employed to screen out targets with inadequate expression and high background noise. Initially, the background noise is computed by taking the mean of each sample's NC, increased by two times the standard deviation, and then subtracted from each sample. Any transcript with a score of less than or equal to 0 in over 75% of the examined samples is excluded from further analysis.
+            </ul>
+            <ul>
+                <b>Filter Samples Based on the Negative Controls:</b> Extending the approach of the second filter, the third filter pertains to "Filter Samples Based on the Negative Controls." In this filter, samples are excluded if over 85% of the genes fail to meet the criteria established in the previous step.
+            </ul>
+            <ul>
+                <b>Remove Outlier Samples:</b> This filter is grounded in the Interquartile Range (IQR) analysis. Samples identified as outliers in the IQR analysis are removed from downstream analysis.
+            </ul>
+
+            If any of these filtering steps are applied, your data will undergo re-evaluation using a Principal Component Analysis (PCA) plot.
+        </p>
+    </section>
+
+    <!-- Section 5: Normalisation and Differential Expression -->
+    <section class="usage-section">
+        <h2>Normalisation and Differential Expression</h2>
+        <p>
+            The user has the flexibility to select the preferred type of normalisation for their data. In the "Differential Expression" section, users can choose from a diverse range of normalisation methods, offering BLAH options, with the default choice set to BLAH. Additionally, for the differential expression (DE) analysis, users have the ability to specify the log2 Fold Change Threshold and the (adjusted) p-value according to their research needs.
+        </p>
+        <p>
+            Once the choice of normalisation method and the specification of cutoff values are made, the DE analysis seamlessly commences. This analysis yields a comprehensive output that encompasses a data table featuring normalised counts and complementary statistical metrics. In addition to the tabular data, interactive visualisations take centre stage, including a Relative log expression (RLE) plot (see <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5798764/">RLE explanation</a>) and a Volcano plot (see <a href="https://en.wikipedia.org/wiki/Volcano_plot_(statistics)">Volcano plot explanation</a>). Furthermore, a heat map is generated to display the selected DE genes.
+        </p>
+    </section>
+
+    <!-- Section 6: Supervised Learning -->
+    <section class="usage-section">
+        <h2>Supervised Learning</h2>
+        <p>
+            Aliquam ut aliquam nulla. Cras pharetra odio quis turpis auctor, non
+            tincidunt risus fringilla. Ut auctor, dolor eu euismod cursus, dolor mi maximus.
+        </p>
+    </section>
+
+    <!-- Section 7: Enrichment Analysis -->
+    <section class="usage-section">
+        <h2>Enrichment Analysis</h2>
+        <p>
+            Aliquam ut aliquam nulla. Cras pharetra odio quis turpis auctor, non
+            tincidunt risus fringilla. Ut auctor, dolor eu euismod cursus, dolor mi maximus.
+        </p>
+    </section>
+
+    <!-- Section 8: Output and Download of Results -->
+    <section class="usage-section">
+        <h2>Output and Download of Results</h2>
+        <p>
+            Aliquam ut aliquam nulla. Cras pharetra odio quis turpis auctor, non
+            tincidunt risus fringilla. Ut auctor, dolor eu euismod cursus, dolor mi maximus.
+        </p>
+    </section>
+
+    <!-- Section 9: Crucial Reminders -->
+    <section class="usage-section">
+        <h2>Crucial Reminders</h2>
+        <p>
+            <li>
+                <b>Matching "filename":</b> The "filename" column in your clinical data must precisely match the name of each RCC file, including the ".RCC" extension. This one-to-one correspondence is crucial for associating the clinical information with the correct raw data.
+            </li>
+            <li>
+                <b>Consistent "condition":</b> The "condition" column should be uniform for samples with the same condition.
+            </li>
+            <li>
+                <b>Group-comparison:</b> NANOinsights is tailored to facilitate precise two-group comparisons within your data. Please note that our software does not support the analysis of more than two groups from the clinical data file. If your clinical data contains more than two groups, our software will not be able to run the analysis effectively.
+            </li>
+            <li>
+                <b>Additional Parameter Information:</b> For in-depth information about the various parameters and settings available in NANOinsights, we invite you to explore our <a href="https://github.com/sgiannouk/nanoinsights">GitHub repository</a>. There, you'll find a comprehensive and detailed explanation of each parameter, offering valuable insights into their functionality and how to best utilise them for your specific needs.
+            </li>
+
+
+
+            <li>
+                <b>Integration with nCounter Analysis System:</b> NANOinsights seamlessly integrates with the nCounter Analysis System by NanoString, ensuring a robust and efficient analysis process. Our software operates behind the scenes to effortlessly process data generated from the nCounter system, providing you with valuable insights and results. It's important to note that our commitment to innovation means that we are continually exploring opportunities to expand our data compatibility. In the future, we may incorporate support for additional data systems to broaden the scope of our platform, offering even more versatility and value to our users.
+
+            </li>
+        </p>
+    </section>
+    
+    <br>
+    
+    <!-- Section 10: Nanoinsights Licence -->
+    <section class="usage-section">
+        <h2>Licence</h2>
+        <p>
+            NANOinsights website operates under the Apache License 2.0, ensuring an open and transparent environment for users to access, utilise, and contribute to our resources.
+            <br>
+            <br>
+            <a href="https://github.com/sgiannouk/nanoinsights/blob/main/LICENSE">Apache License 2.0 for NANOinsights</a>
+        </p>
+    </section>
+
+</div>
+
+</body>
+</html>
+{% endblock %}
