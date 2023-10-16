@@ -23,49 +23,26 @@
         </button>
         <!-- Sidebar Tabs -->
         <ul class="nav flex-column">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    Getting Started
-                </a>
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="#">How to use?</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Video Tutorial</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Run our example</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/sgiannouk/nanoinsights">Our repository</a></li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">My Analysis</a>
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="#">QC and Exploratory Analysis</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Normalisation</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Differential Expression</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Classification</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Enrichment Analysis</a></li>
-                </ul>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="#" id="find-project-tab">Find my project</a>
-            </li>
-            
+            <li class="nav-item"> <a class="nav-link" href="/">Getting Started</a> </li>
+
+            <li class="nav-item"> <a class="nav-link" href="{% url 'usage' %}">How to use?</a> </li>
+
+            <li class="nav-item"><a class="nav-link" href="{% url 'analysis' %}">My Analysis</a></li>
+
+            <li class="nav-item"> <a class="nav-link" href="#" id="find-project-tab">Find my project</a> </li>            
             <!-- Add the search bar beneath the tab -->
             <div id="search-bar" class="mt-3">
                 <input type="text" id="project-reference" placeholder="project's reference code">
                 <button id="projectbutton" onclick="searchProject()">Search</button>
             </div>
 
-            <li class="nav-item">
-                <a class="nav-link" href="#">Website Stats</a>
-                <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"><a class="nav-link" href="#">Contact us</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/sgiannouk/nanoinsights/issues">Report an issue</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://github.com/sgiannouk/nanoinsights/issues">Give Us feedback</a></li>
-                </ul>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Cite Us</a>
-            </li>
+            <li class="nav-item"><a class="nav-link" href="https://github.com/sgiannouk/nanoinsights">Our repository</a></li>
+
+            <li class="nav-item"><a class="nav-link" href="https://github.com/sgiannouk/nanoinsights/issues">Report an issue</a></li>
+
+            <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact us</a></li>
+
+            <li class="nav-item"> <a class="nav-link" href="{% url 'citation' %}">Cite Us</a> </li>
         </ul>
     </div>
 

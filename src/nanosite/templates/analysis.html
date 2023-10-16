@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/analysis_style.css' %}" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 ">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-qc-tab" data-toggle="tab" href="#nav-qc" role="tab" aria-controls="nav-qc" aria-selected="true">Quality Control</a>
+                        <a class="nav-item nav-link" id="nav-explorations-tab" data-toggle="tab" href="#nav-explorations" role="tab" aria-controls="nav-explorations" aria-selected="false">Exploratory Analysis</a>
+                        <a class="nav-item nav-link" id="nav-normalisation-tab" data-toggle="tab" href="#nav-normalisation" role="tab" aria-controls="nav-normalisation" aria-selected="false">Normalisation</a>
+                        <a class="nav-item nav-link" id="nav-de-tab" data-toggle="tab" href="#nav-de" role="tab" aria-controls="nav-de" aria-selected="false">Differential Expression</a>
+                        <a class="nav-item nav-link" id="nav-classification-tab" data-toggle="tab" href="#nav-classification" role="tab" aria-controls="nav-classification" aria-selected="false">Classification</a>
+                        <a class="nav-item nav-link" id="nav-enrichment-tab" data-toggle="tab" href="#nav-enrichment" role="tab" aria-controls="nav-enrichment" aria-selected="false">Enrichment Analysis</a>
+                        <a class="nav-item nav-link" id="nav-download-tab" data-toggle="tab" href="#nav-download" role="tab" aria-controls="nav-download" aria-selected="false">Download</a>
+                    </div>
+                </nav>
+                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                    
+                    <!-- Quality Control -->
+                    <div class="tab-pane fade show active" id="nav-qc" role="tabpanel" aria-labelledby="nav-qc-tab">
+                        Quality Control
+                    </div>
+                    
+                    <!-- Exploratory Analysis -->
+                    <div class="tab-pane fade" id="nav-explorations" role="tabpanel" aria-labelledby="nav-explorations-tab">
+                        Exploratory Analysis
+                    </div>
+                    
+                    <!-- Normalisation -->
+                    <div class="tab-pane fade" id="nav-normalisation" role="tabpanel" aria-labelledby="nav-normalisation-tab">
+                        Normalisation
+                    </div>
+                    
+                    <!-- Differential Expression -->
+                    <div class="tab-pane fade" id="nav-de" role="tabpanel" aria-labelledby="nav-de-tab">
+                        Differential Expression
+                    </div>
+                    
+                    <!-- Classification -->
+                    <div class="tab-pane fade" id="nav-classification" role="tabpanel" aria-labelledby="nav-classification-tab">
+                        Classification
+                    </div>
+                    
+                    <!-- Enrichment Analysis -->
+                    <div class="tab-pane fade" id="nav-enrichment" role="tabpanel" aria-labelledby="nav-enrichment-tab">
+                        Enrichment Analysis
+                    </div>
+                    
+                    <!-- Download -->
+                    <div class="tab-pane fade" id="nav-download" role="tabpanel" aria-labelledby="nav-download-tab">
+                        Download
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/analysis_script.js' %}"></script>
+</body>
+</html>
+{% endblock %}

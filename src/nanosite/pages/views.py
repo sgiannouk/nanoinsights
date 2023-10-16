@@ -7,6 +7,15 @@ def home_view(request, *args, **kwargs):
 def usage_view(request, *args, **kwargs):
     return render(request, "usage.html", {})
 
+def video_view(request, *args, **kwargs):
+    return render(request, "video.html", {})
+
+def example_view(request, *args, **kwargs):
+    return render(request, "example.html", {})
+
+def analysis_view(request, *args, **kwargs):
+    return render(request, "analysis.html", {})
+
 def contact_view(request, *args, **kwargs):
     return render(request, "contact.html", {})
 

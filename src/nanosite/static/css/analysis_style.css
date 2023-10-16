@@ -1,0 +1,10 @@
+
+/* Active tab color */
+.nav-item.nav-link.active {
+    color: #90be6d;
+}
+
+/* Inactive tab color */
+.nav-item.nav-link {
+    color: #675D50;
+}

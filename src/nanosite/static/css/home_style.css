@@ -1,37 +1,205 @@
+body {
+    display: flex;
+    overflow-x: hidden;
+}
 
 
-/* h1 {
-    color: red;
+/* body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f4;
 } */
 
-/* body { */
-    /* color: blue; */
-    /* margin-left: 200px; */
-    /* bottom: 0;
-    left: 0; */
-    /* width: calc(100% - 200px); Adjust to match sidebar width */
-    /* height: 100px; */
-    /* display: flex; */
-    /* position: fixed; */
-    /* font-family: 'Poppins', sans-serif; */
-    /* top: 0;
-    left: 0; */
-    /* height: 100%; */
-    /* background-color: #F5F0BB; */
-    /* overflow-x: hidden; */
-/* } */
+.display-4 {
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 2.5%;
+    /* background: linear-gradient(45deg, #FF5733, #0099CC, #66CC00); */
+    background: linear-gradient(45deg, #FF5733, #0099CC, #66CC00);
+    -webkit-background-clip: text;
+    color: transparent;
+    /* display: inline; */
+}
 
-/* .col-md-6 {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin: 10px;
+/* .gradient-text {
+    background: linear-gradient(45deg, #FF5733, #0099CC, #66CC00);
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline;
+    text-align: center;
+    padding-top: 1%;
+    padding-bottom: 2.5%;
+    width: 100%;
 } */
 
-/* .form-group {
-    margin-bottom: 15px;
-} */
+.h4advancedoptions {
+    padding-top: 3%;
+}
+
+.h2detitle {
+    padding-top: 5%;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.cardbox {
+    /* display: inline; */
+    align-items: stretch; /* Stretch both containers to match the height */
+    height: 95%;
+}
+
+.container-left, .container-right {
+    flex: 1; /* Distribute available space equally between the two containers */
+    margin-right: 10px; /* Optional: Add some spacing between the containers */
+}
+
+
+
+
+/* Input data */
+#chooseFile {
+    display: none; /* Hide the input element */
+}
+.file-upload {
+    display:block;
+    margin-bottom: 16px;
+}
+
+.file-upload .file-select {
+    display:block;
+    border: 2px solid #dce4ec;
+    color: #34495e;
+    cursor:pointer;
+    height:40px;
+    line-height:40px;
+    text-align:left;
+    background:#FFFFFF;
+    overflow:hidden;
+    position:relative;
+}
+.file-upload .file-select .file-select-button {
+    background:#dce4ec;
+    padding:0 10px;
+    display:inline-block;
+    height:40px;
+    line-height:40px;
+}
+
+.file-upload .file-select .file-select-name {
+    line-height:40px;
+    display:inline-block;
+    padding:0 10px;
+}
+
+.file-select:hover .file-select-name {
+    color: #675D50;
+}
+
+.file-upload .file-select:hover {
+    border-color: #F5F0BB;
+    transition:all .2s ease-in-out;
+    -moz-transition:all .2s ease-in-out;
+    -webkit-transition:all .2s ease-in-out;
+    -o-transition:all .2s ease-in-out;
+}
+
+.file-upload .file-select:hover .file-select-button {
+    background: #F5F0BB;
+    color:#675D50;
+    transition:all .2s ease-in-out;
+    -moz-transition:all .2s ease-in-out;
+    -webkit-transition:all .2s ease-in-out;
+    -o-transition:all .2s ease-in-out;
+}
+
+.file-upload.active .file-select {
+    border-color:#186F65;
+    transition:all .2s ease-in-out;
+    -moz-transition:all .2s ease-in-out;
+    -webkit-transition:all .2s ease-in-out;
+    -o-transition:all .2s ease-in-out;
+}
+
+.file-upload.active .file-select .file-select-button {
+    background:#186F65;
+    color:#FFFFFF;
+    transition:all .2s ease-in-out;
+    -moz-transition:all .2s ease-in-out;
+    -webkit-transition:all .2s ease-in-out;
+    -o-transition:all .2s ease-in-out;
+}
+
+.file-upload.active .file-select .file-select-name{
+    color: #B5CB99;
+}
+
+.file-upload .file-select input[type=file] {
+    z-index:100;
+    cursor:pointer;
+    position:absolute;
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    opacity:0;
+    filter:alpha(opacity=0);
+}
+
+.file-upload .file-select.file-select-disabled {
+    opacity:0.65;
+}
+
+.file-upload .file-select.file-select-disabled:hover {
+    cursor:default;
+    display:block;
+    border: 2px solid #dce4ec;
+    color: #34495e;
+    cursor:pointer;
+    height:40px;
+    line-height:40px;
+    margin-top:5px;
+    text-align:left;
+    background:#FFFFFF;
+    overflow:hidden;
+    position:relative;
+}
+
+.file-upload .file-select.file-select-disabled:hover .file-select-button {
+    background:#dce4ec;
+    color:#666666;
+    padding:0 10px;
+    display:inline-block;
+    height:40px;
+    line-height:40px;
+}
+
+.file-upload .file-select.file-select-disabled:hover .file-select-name {
+    line-height:40px;
+    display:inline-block;
+    padding:0 10px;
+}
+
+.file-upload .file-select.file-select-disabled:hover .file-select-name {
+    line-height:40px;
+    display:inline-block;
+    padding:0 10px;
+}
+
+.selected-files {
+    color: green; /* Change the color to your desired color */
+}
+/* TO HERE */
+
+
+
+
 #runBox{
     display: none;
 }
@@ -58,4 +226,73 @@
 
 #crossvalopt {
     display: none;
+}
+
+#toggleAdvancedOptions {
+    text-decoration: none;
+    color: #343a40;
+}
+
+.collapse {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out;
+    text-decoration: none;
+    
+}
+
+.collapse.show {
+    max-height: 1000px;
+}
+
+#toggleIcon {
+    vertical-align: middle; /* Align the icon vertically in the middle */
+    margin-left: 5px; /* Adjust the margin to move the icon to the right */
+}
+
+.form-group select:focus {
+  border-color: #F5F0BB; /* Desired border color */
+  box-shadow: 0 0 2px 2.5px #f8f4cf; /* Desired shadow color */
+}
+
+.form-group input:focus {
+    border-color: #F5F0BB;
+    box-shadow: 0 0 2px 2.5px #f8f4cf; 
+}
+
+.container-advanced .form-group {
+    max-width: 99.5%;
+    margin: 0 auto; /* Center the container horizontally */
+    
+}
+
+.container-advanced .form-group:active, .container-advanced .form-group:focus {
+    box-shadow: 0 0 2px 2.5px #f8f4cf;
+}
+
+/* .form-group .form-select option {
+    background-color: red;
+} */
+
+/* .form-group select option {
+    background-color: red;
+} */
+
+option:hover {
+    background: #343a40;
+    color: white;
+}
+
+option:checked  {
+    background: #4c93db;
+}
+option::selection:not(:checked) {
+  background: red; /* Change the text color of the selected option's highlight */
+}
+
+option i {
+  background: blue;
+  /* color: #fff; */
+  text-shadow: blue;
+  box-shadow: green;
 }
