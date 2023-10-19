@@ -1,5 +1,4 @@
-
 .btn.btn-primary {
-    background-color: #176B87;
-    border: #176B87;
+    background: var(--color-button);
+    border: var(--color-button);
 }

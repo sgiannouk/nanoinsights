@@ -26,17 +26,6 @@ body {
     /* display: inline; */
 }
 
-/* .gradient-text {
-    background: linear-gradient(45deg, #FF5733, #0099CC, #66CC00);
-    -webkit-background-clip: text;
-    color: transparent;
-    display: inline;
-    text-align: center;
-    padding-top: 1%;
-    padding-bottom: 2.5%;
-    width: 100%;
-} */
-
 .h4advancedoptions {
     padding-top: 3%;
 }
@@ -62,17 +51,18 @@ body {
 
 
 
-
 /* Input data */
-#chooseFile {
-    display: none; /* Hide the input element */
+.file-select {
+    display: none;
+    border-radius: 5px;
 }
-.file-upload {
+
+.file-upload {  /*OK*/
     display:block;
     margin-bottom: 16px;
 }
 
-.file-upload .file-select {
+.file-upload .file-select {  /*OK*/
     display:block;
     border: 2px solid #dce4ec;
     color: #34495e;
@@ -84,7 +74,7 @@ body {
     overflow:hidden;
     position:relative;
 }
-.file-upload .file-select .file-select-button {
+.file-upload .file-select .file-select-button {   /*OK*/
     background:#dce4ec;
     padding:0 10px;
     display:inline-block;
@@ -119,7 +109,7 @@ body {
     -o-transition:all .2s ease-in-out;
 }
 
-.file-upload.active .file-select {
+#dataUploadContainer .file-upload.active .file-select {
     border-color:#186F65;
     transition:all .2s ease-in-out;
     -moz-transition:all .2s ease-in-out;
@@ -127,7 +117,7 @@ body {
     -o-transition:all .2s ease-in-out;
 }
 
-.file-upload.active .file-select .file-select-button {
+#dataUploadContainer .file-upload.active .file-select .file-select-button {
     background:#186F65;
     color:#FFFFFF;
     transition:all .2s ease-in-out;
@@ -136,6 +126,22 @@ body {
     -o-transition:all .2s ease-in-out;
 }
 
+#clinicalDataUploadContainer .file-upload.active .file-select {
+    border-color:#186F65;
+    transition:all .2s ease-in-out;
+    -moz-transition:all .2s ease-in-out;
+    -webkit-transition:all .2s ease-in-out;
+    -o-transition:all .2s ease-in-out;
+}
+
+#clinicalDataUploadContainer .file-upload.active .file-select .file-select-button {
+    background:#186F65;
+    color:#FFFFFF;
+    transition:all .2s ease-in-out;
+    -moz-transition:all .2s ease-in-out;
+    -webkit-transition:all .2s ease-in-out;
+    -o-transition:all .2s ease-in-out;
+}
 .file-upload.active .file-select .file-select-name{
     color: #B5CB99;
 }

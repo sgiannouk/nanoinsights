@@ -1,16 +1,23 @@
-document.getElementById('find-project-tab').addEventListener('click', function() {
-var searchBar = document.getElementById('search-bar');
-if (searchBar.style.display === 'none' || searchBar.style.display === '') {
-    searchBar.style.display = 'block';
-} else {
-    searchBar.style.display = 'none';
-}
-});
+window.onload = function(){
+    const sidebar = document.querySelector(".sidebar");
+    const closeBtn = document.querySelector("#btn");
+    const searchBtn = document.querySelector(".bx-search")
 
-// Function to handle the search button click
-function searchProject() {
-// Get the project reference code from the input field
-var projectReference = document.getElementById('project-reference').value;
-// Perform the search or any other action here
-console.log('Searching for project:', projectReference);
+    closeBtn.addEventListener("click",function(){
+        sidebar.classList.toggle("open")
+        menuBtnChange()
+    })
+
+    searchBtn.addEventListener("click",function(){
+        sidebar.classList.toggle("open")
+        menuBtnChange()
+    })
+
+    function menuBtnChange(){
+        if(sidebar.classList.contains("open")){
+            closeBtn.classList.replace("bx-menu","bx-menu-alt-right")
+        }else{
+            closeBtn.classList.replace("bx-menu-alt-right","bx-menu")
+        }
+    }
 }
