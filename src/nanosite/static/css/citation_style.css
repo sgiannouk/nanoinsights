@@ -1,3 +1,7 @@
+.container {
+    padding-top: 6%;
+}
+
 .btn.btn-primary {
     background: var(--color-button);
     border: var(--color-button);

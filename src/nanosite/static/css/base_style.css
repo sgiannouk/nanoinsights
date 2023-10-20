@@ -4,10 +4,6 @@
     color: var(--color-body);
 }
 
-body {
-    min-height: 120hv;
-}
-
 .content {
     position: relative;
     background-color: var(--color-white);

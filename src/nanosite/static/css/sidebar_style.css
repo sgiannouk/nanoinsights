@@ -5,6 +5,7 @@
     --color-text: #675D50;
     --color-second: #90be6d;
     --color-white: #FFF;
+    --color-icewhite: #f5f7f4;
     --color-body: #343a40;
     --color-lightbody: #727f8c;
     --color-button: #176B87;
@@ -31,7 +32,7 @@ body {
 .sidebar {
     min-height: 100vh;
     width: 78px;
-    padding: 6px 14px;
+    padding: 20px 14px 10px;
     z-index: 99;
     background-color: var(--color-default);
     transition: var(--tran-05);
@@ -56,12 +57,10 @@ body {
     transition: var(--tran-05);
 }
 
-.sidebar .logo_details .logo_name {
-    color: var(--color-text);
-    font-size: 20px;
-    font-weight: 500;
+.sidebar .logo_details .logo_name{
     opacity: 0;
     transition: var(--tran-05);
+    max-width: 85%;
 }
 
 .sidebar.open .logo_details .icon,
