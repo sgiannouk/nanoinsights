@@ -3,35 +3,32 @@ body {
     overflow-x: hidden;
 }
 
-
-/* body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background-color: #f4f4f4;
-} */
-
 .display-4 {
     text-align: center;
-    padding-top: 1%;
-    padding-bottom: 2.5%;
-    /* background: linear-gradient(45deg, #FF5733, #0099CC, #66CC00); */
-    background: linear-gradient(45deg, #FF5733, #0099CC, #66CC00);
+    padding-bottom: 10px;
+    background: var(--color-text);
     -webkit-background-clip: text;
     color: transparent;
-    /* display: inline; */
 }
 
-.h4advancedoptions {
-    padding-top: 3%;
+h2 {
+    color: var(--color-body);
 }
 
-.h2detitle {
-    padding-top: 5%;
+.form-label {
+    margin-bottom: 0;
+}
+
+.form-control {
+    margin-top: 0;
+}
+
+.filterstitle {
+    padding-top: 10px;
+}
+
+.advancedoptionstitle {
+    padding-top: 10px;
 }
 
 .form-group {
@@ -39,172 +36,14 @@ body {
 }
 
 .cardbox {
-    /* display: inline; */
     align-items: stretch; /* Stretch both containers to match the height */
-    height: 95%;
+    height: 96%;
 }
 
 .container-left, .container-right {
     flex: 1; /* Distribute available space equally between the two containers */
-    margin-right: 10px; /* Optional: Add some spacing between the containers */
+    margin-right: 10px;
 }
-
-
-
-/* Input data */
-.file-select {
-    display: none;
-    border-radius: 5px;
-}
-
-.file-upload {  /*OK*/
-    display:block;
-    margin-bottom: 16px;
-}
-
-.file-upload .file-select {  /*OK*/
-    display:block;
-    border: 2px solid #dce4ec;
-    color: #34495e;
-    cursor:pointer;
-    height:40px;
-    line-height:40px;
-    text-align:left;
-    background:#FFFFFF;
-    overflow:hidden;
-    position:relative;
-}
-.file-upload .file-select .file-select-button {   /*OK*/
-    background:#dce4ec;
-    padding:0 10px;
-    display:inline-block;
-    height:40px;
-    line-height:40px;
-}
-
-.file-upload .file-select .file-select-name {
-    line-height:40px;
-    display:inline-block;
-    padding:0 10px;
-}
-
-.file-select:hover .file-select-name {
-    color: #675D50;
-}
-
-.file-upload .file-select:hover {
-    border-color: #F5F0BB;
-    transition:all .2s ease-in-out;
-    -moz-transition:all .2s ease-in-out;
-    -webkit-transition:all .2s ease-in-out;
-    -o-transition:all .2s ease-in-out;
-}
-
-.file-upload .file-select:hover .file-select-button {
-    background: #F5F0BB;
-    color:#675D50;
-    transition:all .2s ease-in-out;
-    -moz-transition:all .2s ease-in-out;
-    -webkit-transition:all .2s ease-in-out;
-    -o-transition:all .2s ease-in-out;
-}
-
-#dataUploadContainer .file-upload.active .file-select {
-    border-color:#186F65;
-    transition:all .2s ease-in-out;
-    -moz-transition:all .2s ease-in-out;
-    -webkit-transition:all .2s ease-in-out;
-    -o-transition:all .2s ease-in-out;
-}
-
-#dataUploadContainer .file-upload.active .file-select .file-select-button {
-    background:#186F65;
-    color:#FFFFFF;
-    transition:all .2s ease-in-out;
-    -moz-transition:all .2s ease-in-out;
-    -webkit-transition:all .2s ease-in-out;
-    -o-transition:all .2s ease-in-out;
-}
-
-#clinicalDataUploadContainer .file-upload.active .file-select {
-    border-color:#186F65;
-    transition:all .2s ease-in-out;
-    -moz-transition:all .2s ease-in-out;
-    -webkit-transition:all .2s ease-in-out;
-    -o-transition:all .2s ease-in-out;
-}
-
-#clinicalDataUploadContainer .file-upload.active .file-select .file-select-button {
-    background:#186F65;
-    color:#FFFFFF;
-    transition:all .2s ease-in-out;
-    -moz-transition:all .2s ease-in-out;
-    -webkit-transition:all .2s ease-in-out;
-    -o-transition:all .2s ease-in-out;
-}
-.file-upload.active .file-select .file-select-name{
-    color: #B5CB99;
-}
-
-.file-upload .file-select input[type=file] {
-    z-index:100;
-    cursor:pointer;
-    position:absolute;
-    height:100%;
-    width:100%;
-    top:0;
-    left:0;
-    opacity:0;
-    filter:alpha(opacity=0);
-}
-
-.file-upload .file-select.file-select-disabled {
-    opacity:0.65;
-}
-
-.file-upload .file-select.file-select-disabled:hover {
-    cursor:default;
-    display:block;
-    border: 2px solid #dce4ec;
-    color: #34495e;
-    cursor:pointer;
-    height:40px;
-    line-height:40px;
-    margin-top:5px;
-    text-align:left;
-    background:#FFFFFF;
-    overflow:hidden;
-    position:relative;
-}
-
-.file-upload .file-select.file-select-disabled:hover .file-select-button {
-    background:#dce4ec;
-    color:#666666;
-    padding:0 10px;
-    display:inline-block;
-    height:40px;
-    line-height:40px;
-}
-
-.file-upload .file-select.file-select-disabled:hover .file-select-name {
-    line-height:40px;
-    display:inline-block;
-    padding:0 10px;
-}
-
-.file-upload .file-select.file-select-disabled:hover .file-select-name {
-    line-height:40px;
-    display:inline-block;
-    padding:0 10px;
-}
-
-.selected-files {
-    color: green; /* Change the color to your desired color */
-}
-/* TO HERE */
-
-
-
 
 #runBox{
     display: none;
@@ -244,7 +83,7 @@ body {
     overflow: hidden;
     transition: max-height 0.5s ease-in-out;
     text-decoration: none;
-    
+    /* width: 99%; */
 }
 
 .collapse.show {
@@ -276,29 +115,97 @@ body {
     box-shadow: 0 0 2px 2.5px #f8f4cf;
 }
 
-/* .form-group .form-select option {
-    background-color: red;
-} */
+/* Submit Button */
+.container-submitbutton {
+    padding: 10px 30px;
+    text-align: right; /* Align the content to the right within the container */
+}
 
-/* .form-group select option {
-    background-color: red;
-} */
+button {
+    outline:none;
+    height: 38px;
+    text-align: center;
+    width: 130px;
+    border-radius: 2px;
+    background: #fff;
+    border: 2px solid transparent;
+    border-image: var(--color-submitbutton); /* Define the gradient border */
+    border-image-slice: 1; /* Use the entire border for the gradient */
+    color: var(--color-button);
+    letter-spacing:1px;
+    text-shadow:0;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    &:hover {
+        color: var(--color-body);
+        background: var(--color-icewhite);
+    }
+    &:active {
+        letter-spacing: 2px;
+        letter-spacing: 2px ;
+    }
+}
+.onclic {
+    width: 40px;
+    border-color: var(--color-button);
+    border-width:3px;
+    font-size:0;
+    border-left-color: var(--color-button);
+    animation: rotating 2s 0.25s linear infinite;
 
-option:hover {
-    background: #343a40;
+    &:after {
+        content:"";
+    }
+    &:hover {
+        color: var(--color-button);
+        background: white;
+    }
+}
+.validate {
+    font-size:13px;
     color: white;
+    background: var(--color-button);
+    &:after {
+        font-family:'FontAwesome';
+        content:"\f00c";
+    }
 }
 
-option:checked  {
-    background: #4c93db;
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
-option::selection:not(:checked) {
-  background: red; /* Change the text color of the selected option's highlight */
+/* End of Submit Button */
+
+select.form-select:focus {
+    /* outline: none;  */
+    outline: #186F65;
+    
 }
 
-option i {
-  background: blue;
-  /* color: #fff; */
-  text-shadow: blue;
-  box-shadow: green;
+option:checked,
+option:hover {
+    background-color: var(--color-default);
+    border-radius: 2px;
+    width: 100%;
+}
+
+option {
+    padding-left: 3px;
+}
+
+select option:hover {
+    box-shadow: 0 0 10px 100px var(--color-default) inset;
+}
+
+select option:checked{
+    box-shadow: 0 0 10px 100px var(--color-default) inset;
+}
+
+.form-select select option:hover {
+    box-shadow: 0 0 10px 100px var(--color-default) inset;
 }

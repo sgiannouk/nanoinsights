@@ -1,3 +1,4 @@
+// Side bar collapse-expand
 window.onload = function(){
     const sidebar = document.querySelector(".sidebar");
     const closeBtn = document.querySelector("#btn");

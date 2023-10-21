@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cite Us</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/home_style.css' %}">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
@@ -26,100 +27,192 @@
         <!-- Left Box -->
         <div class="col-md-6 container-left">
             <div class="cardbox shadow-sm p-3 mb-5 bg-light rounded">
-                
-                <h2>Upload Your Data</h2>
-                
-                <div class="file-upload" id="dataUploadContainer">
-                    <label for="dataUpload" title="Upload your data in RCC format. You can choose individual files or a zipped collection. Use the provided area to select files from your computer or drag and drop them.">Select Your NanoString Raw Data</label>
-                    <div class="file-select">
-                        <div class="file-select-button" id="fileName">Choose File</div>
-                        <div class="file-select-name" id="noFile">No file chosen...</div>
-                        <input type="file" name="chooseFile" id="dataUpload" accept=".RCC, .rcc, .zip" multiple>
-                    </div>
-                </div>
+                <form id="dataForm" method="post" action="#"></form>
+                    
+                    <h2>Upload Your Data</h2>
+                    
+                    <div class="training-set">
+                        <!-- Raw Training Set Upload -->
+                        <div class="mb-3" id="dataUploadContainer">
+                            <label for="formFileMultiple" class="form-label" title="Upload your data in RCC format. You can choose individual files or a zipped collection. Use the provided area to select files from your computer or drag and drop them.">Select Your NanoString Raw Data</label>
+                            <input class="form-control" type="file" id="rawTrainingData" accept=".RCC, .rcc, .zip" multiple>
+                        </div>
 
-                <div class="file-upload" id="clinicalDataUploadContainer">
-                    <label for="clinicalDataUpload" title="Upload your clinical data in a tab-delimited format. Ensure that the table includes the filename and condition. In the stage column, 'NA' should be used for any missing stage information. You can select files from your computer or conveniently drag and drop them into the designated area.">Enter Your Clinical Data Table</label>
-                    <div class="file-select">
-                        <div class="file-select-button" id="clinicalFileName">Choose File</div>
-                        <div class="file-select-name" id="clinicalNoFile">No file chosen...</div>
-                        <input type="file" name="chooseClinicalFile" id="clinicalDataUpload" accept=".txt, .tab">
-                    </div>
-                </div>
-
-                <!-- CONDITION and CONTROL Groups -->
-                <div class="form-group">
-                    <label for="control" 
-                    title='Choose the group within your data that serves as the control reference for your analysis. This group will be used as a baseline for comparison in your differential analysis.'
-                    >Select Your Control Group</label>
-                    <input type="text" class="form-control" id="control" placeholder="Control group">
-                </div>
-                <div class="form-group">
-                    <label for="condition" 
-                    title='Designate the group within your data representing the specific condition you wish to analyze. This group will be compared to the control group to uncover relevant insights in your differential analysis.'
-                    >Select Your Condition Group</label>
-                    <input type="text" class="form-control" id="condition" placeholder="Condition group">
-                </div>
-                
-                <!-- Validation Type -->
-                <div class="form-group">
-                    <label for="validationType"
-                    title='Choose the validation method that best suits your classification process. Options include "Split" for an 80-20% training-validation split, "Runs" for validation using specific runs, "External Set" for uploading additional validation data, or "No Validation Set" (not recommended) where all uploaded samples serve as both training and validation, but may introduce bias.'
-                    >Select the Classification Validation Type</label>
-                    <select class="form-select" id="validationType">
-                        <option select value="split">Split</option>
-                        <option value="run">Runs</option>
-                        <option value="extSet">External Set</option>
-                        <option value="noVS">No Validation Set</option>
-                    </select>
-                </div>
-                
-                <!-- Run Selection (Hidden by default) -->
-                <div class="form-group" id="runBox">
-                    <label for="run"
-                    title='As you have opted for "Runs" as your Classification Validation Type, you now have the opportunity to pick one or more specific runs. These selected runs, which represent the samples in these cartridges, will function as your validation set, while all other runs will be utilized for training.'
-                    >Select Run/Runs</label>
-                    <select class="form-select" id="run">
-                        <!-- Add options for runs here -->
-                    </select>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-6" id="extRawBox">
-                        <!-- External Set (Hidden by default) -->
-                        <div class="frame">
-                            <div class="center">
-                                <div class="title">
-                                    <p title='Since you have chosen the "External Set" validation method, upload your external raw data from NanoString. Ensure that the files are in the correct format. You can either select them from your computer or conveniently drag and drop the files into the indicated area. This data will be used for validation in your analysis.'>Enter Your NanoString External Set Raw Data</p>
-                                </div>
-                                <div class="dropzone">
-                                    <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
-                                    <input type="file" class="upload-input" id="extSetData" accept=".RCC, .rcc, .zip"/>
-                                </div>
-                                <button type="button" class="btn" name="uploadbutton">Upload</button>
-                            </div>
+                        <!-- Clinical Training Set Upload -->
+                        <div class="mb-3" id="clinicalDataUploadContainer">
+                            <label for="formFile" class="form-label" title="Upload your clinical data in a tab-delimited format. Ensure that the table includes the filename and condition. In the stage column, 'NA' should be used for any missing stage information. You can select files from your computer or conveniently drag and drop them into the designated area.">Select Your Clinical Data Table</label>
+                            <input class="form-control" type="file" id="clinicalTrainingData" accept=".txt, .tab">
                         </div>
                     </div>
 
-                    <div class="col-md-6" id="extClinicalBox">
+                    <!-- CONDITION and CONTROL Groups -->
+                    <div class="form-group">
+                        <label for="control" 
+                        title='Choose the group within your data that serves as the control reference for your analysis. This group will be used as a baseline for comparison in your differential analysis.'
+                        >Select Your Control Group</label>
+                        <input type="text" class="form-control" id="control" placeholder="Control group">
+                    </div>
+                    <div class="form-group">
+                        <label for="condition" 
+                        title='Designate the group within your data representing the specific condition you wish to analyze. This group will be compared to the control group to uncover relevant insights in your differential analysis.'
+                        >Select Your Condition Group</label>
+                        <input type="text" class="form-control" id="condition" placeholder="Condition group">
+                    </div>
+                    
+                    <!-- Validation Type -->
+                    <div class="form-group">
+                        <label for="validationType"
+                        title='Choose the validation method that best suits your classification process. Options include "Split" for an 80-20% training-validation split, "Runs" for validation using specific runs, "External Set" for uploading additional validation data, or "No Validation Set" (not recommended) where all uploaded samples serve as both training and validation, but may introduce bias.'
+                        >Select the Classification Validation Type</label>
+                        <select class="form-select" id="validationType">
+                            <option selected value="split">Split</option>
+                            <option value="run">Runs</option>
+                            <option value="extSet">External Set</option>
+                            <option value="noVS">No Validation Set</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Run Selection (Hidden by default) -->
+                    <div class="form-group" id="runBox">
+                        <label for="run"
+                        title='As you have opted for "Runs" as your Classification Validation Type, you now have the opportunity to pick one or more specific runs. These selected runs, which represent the samples in these cartridges, will function as your validation set, while all other runs will be utilized for training.'
+                        >Select Run/Runs</label>
+                        <select class="form-select" id="run">
+                            <!-- Add options for runs here -->
+                        </select>
+                    </div>
+
+                    <div class="validation-set">
                         <!-- External Set (Hidden by default) -->
-                        <div class="frame">
-                            <div class="center">
-                                <div class="title">
-                                    <p title='Since you have chosen the "External Set" validation method, upload your external clinical data corresponding to the external raw data you provided. This clinical data should be in a tab-delimited format and must include the filename, condition, and an optional stage, with "NA" for missing stage information. You can either select files from your computer or easily drag and drop them into the designated area. This data will be used for validation in your analysis.'>Enter Your NanoString External Set Clinical Data</p>
-                                </div>
-                                <div class="dropzone">
-                                    <img src="http://100dayscss.com/codepen/upload.svg" class="upload-icon" />
-                                    <input type="file" class="upload-input" id="extClinicalData" accept=".txt, .tab"/>
-                                </div>
-                                <button type="button" class="btn" name="uploadbutton">Upload</button>
-                            </div>
+                        <div class="mb-3" id="extRawBox">
+                            <label for="formFileMultiple" class="form-label" title='Since you have chosen the "External Set" validation method, upload your external raw data from NanoString. Ensure that the files are in the correct format. You can either select them from your computer or conveniently drag and drop the files into the indicated area. This data will be used for validation in your analysis.'>Select Your NanoString External Set Raw Data</label>
+                            <input class="form-control" type="file" id="rawValidationData" accept=".RCC, .rcc, .zip" multiple>
+                        </div>
+
+                        <!-- External Set (Hidden by default) -->
+                        <div class="mb-3" id="extClinicalBox">
+                            <label for="formFile" class="form-label" title='Since you have chosen the "External Set" validation method, upload your external clinical data corresponding to the external raw data you provided. This clinical data should be in a tab-delimited format and must include the filename, condition, and an optional stage, with "NA" for missing stage information. You can either select files from your computer or easily drag and drop them into the designated area. This data will be used for validation in your analysis.'>Select Your NanoString External Set Clinical Data<</label>
+                            <input class="form-control" type="file" id="clinicalValidationData" accept=".txt, .tab">
                         </div>
                     </div>
+
+                    <!-- Submit Button -->
+                    <div class="container-submitbutton">
+                        <button id="button">Submit</button>
+                    </div>
+
+                </form>
+            </div>
                 
+                
+        </div>
+        
+        
+        <!-- Right Box -->
+        <div class="col-md-6 container-right">
+            <div class="cardbox shadow-sm p-3 mb-5 bg-light rounded">
+                <form id="filterForm" method="post" action="#">
+                    
+                    <!-- Differential Expression -->
+                    <h2 class="detitle">Differential Expression</h2>
+
+                    <div class="form-group">
+                        <label for="norm" id="normselection" 
+                        title='Choose the normalization method that best suits your data. This step is crucial in preparing your data for further analysis.'
+                        >Normalization Method Selection</label>
+                        <select class="form-select" id="norm">
+                            <option selected value="DESeq2">DESeq2</option>
+                            <option value="edger">edgeR</option>
+                            <option value="ruvdeseq">RUVDESeq2</option>
+                            <option value="ruvedger">RUVedgeR</option>
+                        </select>
+                    </div>
+
+                    <!-- edgernormselection (Hidden by default) -->
+                    <div class="form-group" id="edgernormselection">
+                        <label for="edgernorm" 
+                        title='Opt for the specific type of edgeR normalization that aligns with your data and research objectives.'
+                        >edgeR Normalization Method</label>
+                        <select class="form-select" id="edgernorm">
+                            <option selected value="upperquartile">Upper Quartile</option>
+                            <option value="tmm">TMM</option>
+                            <option value="tmmwsp">TMMwsp</option>
+                            <option value="rle">RLE</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lfcthreshold" 
+                        title='Choose the desired log2 fold change threshold that defines the minimum magnitude of change in gene expression considered significant. This parameter plays a critical role in determining the genes that are differentially expressed in your analysis. Adjust this threshold to align with your specific research goals and level of stringency.'
+                        >log2 Fold Change Threshold</label>
+                        <input type="number" step="0.5" class="form-control" id="lfcthreshold" value="1" min="0.1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="padjusted" 
+                        title='Specify the desired adjusted p-value threshold. This threshold helps identify statistically significant results in your analysis. It allows you to control the false discovery rate and determine which findings are most reliable and relevant for your research. Adjust this value to suit your specific analytical needs.'
+                        >Adjusted p-value Selection</label>
+                        <input type="number" step="0.01" class="form-control" id="padjusted" value="0.05" min="0" max="1">
+                    </div>
+
+
+                    <!-- Filters -->
+                    <a data-bs-toggle="collapse" id="toggleFilterOptions" onclick="toggleIcon()">
+                        <h4 class="filterstitle">Filters<ion-icon id="toggleIcon" name="chevron-down-outline"></ion-icon></h4>
+                    </a>
+                    <div class="collapse" id="collapsefilteroptions">
+                        <div class="form-group">
+                            <label for="filter_lowlyExpr_genes" 
+                            title='This filter, based on the edgeR function "filterByExpr," identifies and removes genes with low expression levels. This process enhances the quality and relevance of your data for downstream analysis.'
+                            >Filter Lowly Expressed Genes</label>
+                            <select class="form-select" id="filter_lowlyExpr_genes">
+                                <option value="true">True</option>
+                                <option selected value="false">False</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filter_genes_on_negCtrl" 
+                            title=' This filter employs the Negative Control (NC) probes in your assay to screen out genes with poor expression and high background noise. It calculates the NCs background, and genes that consistently score below a certain threshold are excluded from further analysis, ensuring that your dataset is composed of genes with reliable expression patterns.'
+                            >Filter Genes Based on Negative Controls</label>
+                            <select class="form-select" id="filter_genes_on_negCtrl">
+                                <option selected value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filter_samples_on_negCtrl"
+                            title='Building on the Negative Control (NC) probes, this filter focuses on the samples. It evaluates the performance of individual samples based on NCs, and samples that do not meet the specified criteria are removed from the analysis. This step ensures that your dataset consists of high-quality and reliable samples.'
+                            >Filter Samples Based on the Negative Controls</label>
+                            <select class="form-select" id="filter_samples_on_negCtrl">
+                                <option value="true">True</option>
+                                <option selected value="false">False</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="remove_outlier_samples" 
+                            title="This filter is based on the Interquartile Range (IQR) analysis and identifies samples that deviate significantly from the norm. These outlier samples are excluded from further analysis, ensuring that your results are not skewed by unusual data points."
+                            >Remove Outlier Samples</label>
+                            <select class="form-select" id="remove_outlier_samples">
+                                <option selected value="true">True</option>
+                                <option value="false">False</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="iqrcutoff" 
+                            title='This parameter sets the cutoff for identifying outlier samples using the Interquartile Range (IQR) analysis. It determines the threshold at which samples are considered outliers and subsequently removed from the analysis.'
+                            >IQR Cutoff</label>
+                            <input type="number" step="0.5" class="form-control" id="iqrcutoff" value="1.5">
+                        </div>
+                    </div>
+
+
                     <!-- Advanced Options -->
                     <a data-bs-toggle="collapse" id="toggleAdvancedOptions" onclick="toggleIcon()">
-                    <h4 class="h4advancedoptions">Advanced Options<ion-icon id="toggleIcon" name="chevron-down-outline"></ion-icon></h4>
+                        <h4 class="advancedoptionstitle">Advanced Options<ion-icon id="toggleIcon" name="chevron-down-outline"></ion-icon></h4>
                     </a>
                     <div class="collapse" id="collapseadvancedoptions">
                         <!-- ML options -->
@@ -174,7 +267,7 @@
                         
                         <div class="form-group">
                             <label for="classifiers" 
-                            title='Choose one or more machine learning algorithms to perform the classification task. Options include Random Forest (RF), K-Nearest Neighbors (KNN), Gradient Boosting (GB), and Extra Trees Classifier. You can select multiple classifiers to assess how different algorithms impact your analysis. '
+                            title='Choose one or more machine learning algorithms to perform the classification task. Options include Random Forest (RF), K-Nearest Neighbors (KNN), Gradient Boosting (GB), and Extra Trees Classifier. You can select multiple classifiers to assess how different algorithms impact your analysis.'
                             >Classifier Selection</label>
                             <select class="form-select" id="classifiers" name="classifiers" multiple>
                                 <option selected value="RF">Random Forest</option>
@@ -216,104 +309,8 @@
                             </select>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-        
-        
-        <!-- Right Box -->
-        <div class="col-md-6 container-right">
-            <div class="cardbox shadow-sm p-3 mb-5 bg-light rounded">
-                
-                <!-- Filters -->
-                <h2>Filters</h2>
-                <div class="form-group">
-                    <label for="filter_lowlyExpr_genes" 
-                    title='This filter, based on the edgeR function "filterByExpr," identifies and removes genes with low expression levels. This process enhances the quality and relevance of your data for downstream analysis.'
-                    >Filter Lowly Expressed Genes</label>
-                    <select class="form-select" id="filter_lowlyExpr_genes">
-                        <option value="true">True</option>
-                        <option selected value="false">False</option>
-                    </select>
-                </div>
 
-                <div class="form-group">
-                    <label for="filter_genes_on_negCtrl" 
-                    title=' This filter employs the Negative Control (NC) probes in your assay to screen out genes with poor expression and high background noise. It calculates the NCs background, and genes that consistently score below a certain threshold are excluded from further analysis, ensuring that your dataset is composed of genes with reliable expression patterns.'
-                    >Filter Genes Based on Negative Controls</label>
-                    <select class="form-select" id="filter_genes_on_negCtrl">
-                        <option selected value="true">True</option>
-                        <option value="false">False</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="filter_samples_on_negCtrl"
-                    title='Building on the Negative Control (NC) probes, this filter focuses on the samples. It evaluates the performance of individual samples based on NCs, and samples that do not meet the specified criteria are removed from the analysis. This step ensures that your dataset consists of high-quality and reliable samples.'
-                    >Filter Samples Based on the Negative Controls</label>
-                    <select class="form-select" id="filter_samples_on_negCtrl">
-                        <option value="true">True</option>
-                        <option selected value="false">False</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="remove_outlier_samples" 
-                    title="This filter is based on the Interquartile Range (IQR) analysis and identifies samples that deviate significantly from the norm. These outlier samples are excluded from further analysis, ensuring that your results are not skewed by unusual data points."
-                    >Remove Outlier Samples</label>
-                    <select class="form-select" id="remove_outlier_samples">
-                        <option selected value="true">True</option>
-                        <option value="false">False</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="iqrcutoff" 
-                    title='This parameter sets the cutoff for identifying outlier samples using the Interquartile Range (IQR) analysis. It determines the threshold at which samples are considered outliers and subsequently removed from the analysis.'
-                    >IQR Cutoff</label>
-                    <input type="number" step="0.5" class="form-control" id="iqrcutoff" value="1.5">
-                </div>
-
-                <!-- Differential Expression -->
-                <h2 class="h2detitle">Differential Expression</h2>
-                <div class="form-group">
-                    <label for="norm" id="normselection" 
-                    title='Choose the normalization method that best suits your data. This step is crucial in preparing your data for further analysis.'
-                    >Normalization Method Selection</label>
-                    <select class="form-select" id="norm">
-                        <option selected value="DESeq2">DESeq2</option>
-                        <option value="edger">edgeR</option>
-                        <option value="ruvdeseq">RUVDESeq2</option>
-                        <option value="ruvedger">RUVedgeR</option>
-                    </select>
-                </div>
-
-                <!-- edgernormselection (Hidden by default) -->
-                <div class="form-group" id="edgernormselection">
-                    <label for="edgernorm" 
-                    title='Opt for the specific type of edgeR normalization that aligns with your data and research objectives.'
-                    >edgeR Normalization Method</label>
-                    <select class="form-select" id="edgernorm">
-                        <option selected value="upperquartile">Upper Quartile</option>
-                        <option value="tmm">TMM</option>
-                        <option value="tmmwsp">TMMwsp</option>
-                        <option value="rle">RLE</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="lfcthreshold" 
-                    title='Choose the desired log2 fold change threshold that defines the minimum magnitude of change in gene expression considered significant. This parameter plays a critical role in determining the genes that are differentially expressed in your analysis. Adjust this threshold to align with your specific research goals and level of stringency.'
-                    >log2 Fold Change Threshold</label>
-                    <input type="number" step="0.5" class="form-control" id="lfcthreshold" value="1" min="0.1">
-                </div>
-
-                <div class="form-group">
-                    <label for="padjusted" 
-                    title='Specify the desired adjusted p-value threshold. This threshold helps identify statistically significant results in your analysis. It allows you to control the false discovery rate and determine which findings are most reliable and relevant for your research. Adjust this value to suit your specific analytical needs.'
-                    >Adjusted p-value Selection</label>
-                    <input type="number" step="0.01" class="form-control" id="padjusted" value="0.05" min="0" max="1">
-                </div>
+                </form>
             </div>
         </div>
     </div>

@@ -28,8 +28,8 @@ validationType.addEventListener("change", function () {
     });
 
 
-////////////////////////////
 
+////////////////////////////
 // JavaScript to show/hide the "edgernormselection" section based on the "norm" dropdown
 document.getElementById("norm").addEventListener("change", function() {
     var selectedValue = this.value;
@@ -43,8 +43,8 @@ document.getElementById("norm").addEventListener("change", function() {
 });
 
 
-////////////////////////////
 
+////////////////////////////
 // Get references to the relevant elements
 const featureSelectionDropdown = document.getElementById("featureselection");
 const rfecrossvalField = document.getElementById("rfecrossvalopt");
@@ -68,8 +68,8 @@ featureSelectionDropdown.addEventListener("change", toggleFields);
 toggleFields();
 
 
-////////////////////////////
 
+////////////////////////////
 // Collapse the Advanced Options menus
 document.getElementById("toggleAdvancedOptions").addEventListener("click", function() {
     var advancedOptions = document.getElementById("collapseadvancedoptions");
@@ -96,9 +96,36 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-////////////////////////////
 
-// Change the icon next to "Advanced Options" when you click on it
+// Collapse the Filter Options menus
+document.getElementById("toggleFilterOptions").addEventListener("click", function() {
+    var filterOptions = document.getElementById("collapsefilteroptions");
+    if (filterOptions.classList.contains("show")) {
+        filterOptions.classList.remove("show");
+    } else {
+        filterOptions.classList.add("show");
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    var toggleButton = document.getElementById("toggleFilterOptions");
+    var collapseElement = document.getElementById("collapsefilterdoptions");
+
+    toggleButton.addEventListener("click", function () {
+        if (collapseElement.classList.contains("show")) {
+            // Collapse is shown; scroll to the bottom
+            collapseElement.scrollIntoView({ behavior: "smooth" });
+        } else {
+            // Collapse is hidden; scroll to the top
+            toggleButton.scrollIntoView({ behavior: "smooth" });
+        }
+    });
+});
+
+
+
+////////////////////////////
+// Change the icon next to "Advanced Options" and "Filters" when you click on it
 function toggleIcon() {
     const icon = document.getElementById('toggleIcon');
     if (icon.getAttribute('name') === 'chevron-down-outline') {
@@ -109,59 +136,23 @@ function toggleIcon() {
 }
 
 
+
 ////////////////////////////
-// Uploading raw data
-$('#dataUpload').bind('change', function () {
-    var filename = $("#dataUpload").val();
-    if (/^\s*$/.test(filename)) {
-        $(".file-upload").removeClass('active');
-        $("#noFile").text("No file chosen..."); 
-    } else {
-        $(".file-upload").addClass('active');
-        $("#noFile").text(filename.replace("C:\\fakepath\\", "")); 
-    }
-});
-
-$(document).ready(function () {
-    $('#dataUpload').on('change', function () {
-        var input = this;
-        var files = input.files;
-
-        if (files.length > 0) {
-            // Files have been selected
-            var text = files.length + (files.length === 1 ? ' file selected' : ' files selected');
-            $('#noFile').text(text);
-        } else {
-            // No files chosen, reset the text to "No file chosen..."
-            $('#noFile').text('No file chosen...');
-        }
+//Submit button
+$(function() {
+    $( "#button" ).click(function() {
+        $( "#button" ).addClass( "onclic", 250, validate);
     });
-});
 
-// Uploading clinical data
-$('#clinicalDataUpload').bind('change', function () {
-    var filename = $("#clinicalDataUpload").val();
-    if (/^\s*$/.test(filename)) {
-        $(".file-upload").removeClass('active');
-        $("#clinicalNoFile").text("No file chosen..."); 
-    } else {
-        $(".file-upload").addClass('active');
-        $("#clinicalNoFile").text(filename.replace("C:\\fakepath\\", "")); 
+    function validate() {
+        setTimeout(function() {
+        $( "#button" ).removeClass( "onclic" );
+        $( "#button" ).addClass( "validate", 450, callback );
+        }, 2250 );
     }
-});
-
-$(document).ready(function () {
-    $('#clinicalDataUpload').on('change', function () {
-        var input = this;
-        var files = input.files;
-
-        if (files.length > 0) {
-            // Files have been selected
-            var text = files.length === 1 ? files[0].name : files.length + ' files selected';
-            $('#clinicalNoFile').text(text);
-        } else {
-            // No files chosen, reset the text to "No file chosen..."
-            $('#clinicalNoFile').text('No file chosen...');
+        function callback() {
+        setTimeout(function() {
+            $( "#button" ).removeClass( "validate" );
+        }, 1250 );
         }
-    });
 });
