@@ -157,7 +157,7 @@ body {
 }
 
 .sidebar input::placeholder {
-    color:var(--color-text)
+    color:var(--color-text);
 }
 
 .sidebar.open input{
