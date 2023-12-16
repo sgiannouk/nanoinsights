@@ -57,10 +57,6 @@ h2 {
     display: none;
 }
 
-#edgernormselection {
-    display: none;
-}
-
 #rfecrossvalopt {
     display: none;
 }
@@ -69,9 +65,9 @@ h2 {
     display: none;
 }
 
-#crossvalopt {
+/* #crossvalopt {
     display: none;
-}
+} */
 
 #toggleAdvancedOptions {
     text-decoration: none;
@@ -181,19 +177,6 @@ button {
 }
 /* End of Submit Button */
 
-select.form-select:focus {
-    /* outline: none;  */
-    outline: #186F65;
-    
-}
-
-option:checked,
-option:hover {
-    background-color: var(--color-default);
-    border-radius: 2px;
-    width: 100%;
-}
-
 option {
     padding-left: 3px;
 }
@@ -208,4 +191,8 @@ select option:checked{
 
 .form-select select option:hover {
     box-shadow: 0 0 10px 100px var(--color-default) inset;
+}
+
+.container-radio {
+    padding-bottom: 9px;
 }

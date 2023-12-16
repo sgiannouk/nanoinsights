@@ -40,8 +40,8 @@
 
                         <!-- Clinical Training Set Upload -->
                         <div class="mb-3" id="clinicalDataUploadContainer">
-                            <label for="formFile" class="form-label" title="Upload your clinical data in a tab-delimited format. Ensure that the table includes the filename and condition. In the stage column, 'NA' should be used for any missing stage information. You can select files from your computer or conveniently drag and drop them into the designated area.">Select Your Clinical Data Table</label>
-                            <input class="form-control" type="file" id="clinicalTrainingData" accept=".txt, .tab">
+                            <label for="formFile" class="form-label" title="Please upload your clinical data in a comma-delimited format, ensuring that the table contains both the filename and condition columns. You can either choose files from your computer or conveniently drag and drop them into the designated area.">Select Your Clinical Data Table</label>
+                            <input class="form-control" type="file" id="clinicalTrainingData" accept=".csv, .txt">
                         </div>
                     </div>
 
@@ -59,16 +59,33 @@
                         <input type="text" class="form-control" id="condition" placeholder="Condition group">
                     </div>
                     
+                    <div class="container-radio">
+                    <label for="formFile" class="form-label" title="Kindly specify the type of nCounter instrument employed: MAX/FLEX or SPRINT.">Select nCounter Analysis System Instrument</label>
+                    <div class="row">
+                        <div class="col-auto">
+                        <div class="form-check form-check-inline">
+                            <input checked class="form-check-input" type="radio" name="radioGroup" id="radioOption1" value="option1">
+                            <label class="form-check-label" for="radioOption1">MAX/FLEX</label>
+                        </div>
+
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="radioGroup" id="radioOption2" value="option2">
+                            <label class="form-check-label" for="radioOption2">SPRINT</label>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    
                     <!-- Validation Type -->
                     <div class="form-group">
                         <label for="validationType"
-                        title='Choose the validation method that best suits your classification process. Options include "Split" for an 80-20% training-validation split, "Runs" for validation using specific runs, "External Set" for uploading additional validation data, or "No Validation Set" (not recommended) where all uploaded samples serve as both training and validation, but may introduce bias.'
+                        title='Choose the validation method that best suits your classification process. Options include "Split" for an 80-20% training-validation split, "Runs" for validation using specific runs, "External Set" for uploading additional validation data, or "Only Normalisation" to solely normalize the dataset without supervised learning tasks.'
                         >Select the Classification Validation Type</label>
                         <select class="form-select" id="validationType">
                             <option selected value="split">Split</option>
                             <option value="run">Runs</option>
                             <option value="extSet">External Set</option>
-                            <option value="noVS">No Validation Set</option>
+                            <option value="onlyNorm">Only Normalisation</option>
                         </select>
                     </div>
                     
@@ -83,16 +100,16 @@
                     </div>
 
                     <div class="validation-set">
-                        <!-- External Set (Hidden by default) -->
+                        <!-- External Test Set (Hidden by default) -->
                         <div class="mb-3" id="extRawBox">
-                            <label for="formFileMultiple" class="form-label" title='Since you have chosen the "External Set" validation method, upload your external raw data from NanoString. Ensure that the files are in the correct format. You can either select them from your computer or conveniently drag and drop the files into the indicated area. This data will be used for validation in your analysis.'>Select Your NanoString External Set Raw Data</label>
+                            <label for="formFileMultiple" class="form-label" title='Since you have chosen the "External Set" validation method, upload your external raw data from NanoString. Ensure that the files are in the correct format. You can either select them from your computer or conveniently drag and drop the files into the indicated area. This data will serve as an independent external test set, validating your analysis.'>Select Your NanoString External Set Raw Data</label>
                             <input class="form-control" type="file" id="rawValidationData" accept=".RCC, .rcc, .zip" multiple>
                         </div>
 
-                        <!-- External Set (Hidden by default) -->
+                        <!-- External Test Set (Hidden by default) -->
                         <div class="mb-3" id="extClinicalBox">
-                            <label for="formFile" class="form-label" title='Since you have chosen the "External Set" validation method, upload your external clinical data corresponding to the external raw data you provided. This clinical data should be in a tab-delimited format and must include the filename, condition, and an optional stage, with "NA" for missing stage information. You can either select files from your computer or easily drag and drop them into the designated area. This data will be used for validation in your analysis.'>Select Your NanoString External Set Clinical Data<</label>
-                            <input class="form-control" type="file" id="clinicalValidationData" accept=".txt, .tab">
+                            <label for="formFile" class="form-label" title='As you have opted for the "External Set" validation method, please upload the clinical data corresponding to the external raw data provided. Ensure the clinical data is in a comma-delimited format and includes the filename and condition columns. You can choose files from your computer or simply drag and drop them into the designated area. This data will serve as an independent external test set, validating your analysis.'>Select Your NanoString External Set Clinical Data<</label>
+                            <input class="form-control" type="file" id="clinicalValidationData" accept=".csv, .txt">
                         </div>
                     </div>
 
@@ -118,26 +135,19 @@
 
                     <div class="form-group">
                         <label for="norm" id="normselection" 
-                        title='Choose the normalization method that best suits your data. This step is crucial in preparing your data for further analysis.'
+                        title='Choose the preferred normalisation method that best suits your data. This step is crucial in preparing your data for downstream analysis.'
                         >Normalization Method Selection</label>
                         <select class="form-select" id="norm">
-                            <option selected value="DESeq2">DESeq2</option>
-                            <option value="edger">edgeR</option>
-                            <option value="ruvdeseq">RUVDESeq2</option>
-                            <option value="ruvedger">RUVedgeR</option>
-                        </select>
-                    </div>
-
-                    <!-- edgernormselection (Hidden by default) -->
-                    <div class="form-group" id="edgernormselection">
-                        <label for="edgernorm" 
-                        title='Opt for the specific type of edgeR normalization that aligns with your data and research objectives.'
-                        >edgeR Normalization Method</label>
-                        <select class="form-select" id="edgernorm">
-                            <option selected value="upperquartile">Upper Quartile</option>
-                            <option value="tmm">TMM</option>
-                            <option value="tmmwsp">TMMwsp</option>
-                            <option value="rle">RLE</option>
+                            <option selected value="auto">Auto-detection</option>
+                            <option value="nSolver">nSolver</option>
+                            <option value="geNorm_housekeeping">Housekeeping geNorm</option>
+                            <option value="housekeeping_scaled">Housekeeping Scaling</option>
+                            <option value="all_endogenous_scaled">Endogenous and Housekeeping Scaling</option>
+                            <option value="quantile">Quantile</option>
+                            <option value="loess">Cyclic Loess</option>
+                            <option value="vsn">VSN</option>
+                            <option value="ruv">RUVSeq</option>
+                            <!-- <option value="ruvIII">RUVIII</option> -->
                         </select>
                     </div>
 
@@ -145,7 +155,7 @@
                         <label for="lfcthreshold" 
                         title='Choose the desired log2 fold change threshold that defines the minimum magnitude of change in gene expression considered significant. This parameter plays a critical role in determining the genes that are differentially expressed in your analysis. Adjust this threshold to align with your specific research goals and level of stringency.'
                         >log2 Fold Change Threshold</label>
-                        <input type="number" step="0.5" class="form-control" id="lfcthreshold" value="1" min="0.1">
+                        <input type="number" step="0.1" class="form-control" id="lfcthreshold" value="0.5" min="0">
                     </div>
 
                     <div class="form-group">
@@ -186,8 +196,8 @@
                             title='Building on the Negative Control (NC) probes, this filter focuses on the samples. It evaluates the performance of individual samples based on NCs, and samples that do not meet the specified criteria are removed from the analysis. This step ensures that your dataset consists of high-quality and reliable samples.'
                             >Filter Samples Based on the Negative Controls</label>
                             <select class="form-select" id="filter_samples_on_negCtrl">
-                                <option value="true">True</option>
-                                <option selected value="false">False</option>
+                                <option selected value="true">True</option>
+                                <option value="false">False</option>
                             </select>
                         </div>
 
@@ -196,8 +206,8 @@
                             title="This filter is based on the Interquartile Range (IQR) analysis and identifies samples that deviate significantly from the norm. These outlier samples are excluded from further analysis, ensuring that your results are not skewed by unusual data points."
                             >Remove Outlier Samples</label>
                             <select class="form-select" id="remove_outlier_samples">
-                                <option selected value="true">True</option>
-                                <option value="false">False</option>
+                                <option value="true">True</option>
+                                <option selected value="false">False</option>
                             </select>
                         </div>
 
@@ -218,11 +228,11 @@
                         <!-- ML options -->
                         <div class="form-group">
                             <label for="correlated" 
-                            title='This filter identifies and removes genes that exhibit high correlation, reducing redundancy in your dataset. By eliminating highly correlated genes (>95%), this step can enhance the quality of your analysis and provide more robust results.'
+                            title='This filter identifies and removes genes that exhibit high correlation, reducing redundancy in your dataset. By eliminating highly correlated genes (>90%), this step can enhance the quality of your analysis and provide more robust results.'
                             >Highly Correlated Genes Filtering</label>
                                 <select class="form-select" id="correlated">
-                                    <option value="true">True</option>
-                                    <option selected value="false">False</option>
+                                    <option selected value="true">True</option>
+                                    <option value="false">False</option>
                                 </select>
                         </div>
 
@@ -231,8 +241,8 @@
                             title='This filter targets genes with minimal variation, often referred to as quasi-constant genes. By removing these genes, the analysis focuses on more informative and variable genes, which can improve the quality and relevance of your results.'
                             >Quasi-constant Genes Filtering</label>
                                 <select class="form-select" id="quasiconstant">
-                                    <option value="true">True</option>
-                                    <option selected value="false">False</option>
+                                    <option selected value="true">True</option>
+                                    <option value="false">False</option>
                                 </select>
                         </div>
                         
@@ -242,6 +252,7 @@
                             >Feature Selection Method</label>
                             <select class="form-select" id="featureselection" name="featureselection">
                                 <option selected value="RFE">Recursive Feature Elimination</option>
+                                <option value="PI">Permutation Feature Importance</option>
                                 <option value="DE">Differentially Expressed genes</option>
                                 <option value="noFS">no Feature Selection</option>
                             </select>
@@ -249,65 +260,73 @@
                         
                         <div class="form-group" id="rfecrossvalopt">
                             <label for="rfecrossval"
-                            title='Since you have chosen Recursive Feature Elimination (RFE) for feature selection, you can further refine it with cross-validation. RFE-CV allows you to systematically assess the impact of feature selection on your classification model through methods like leave-one-out cross-validation (LOOCV), 5-fold cross-validation (5-fold CV), or 10-fold cross-validation (10-fold CV).'
+                            title='Since you have chosen Recursive Feature Elimination (RFE) for feature selection, you can further refine it with Cross-Validation. RFE-CV allows you to systematically assess the impact of feature selection on your classification model through methods like Leave-One-Out Cross-Validation (LOOCV), 5-fold Cross-Validation (5FCV), or 10-fold Cross-Validation (10FCV).'
                             >Recursive Feature Elimination Cross-Validation</label>
                             <select class="form-select" id="rfecrossval" name="rfecrossval">
-                                <option selected value="LOOCV">leave one out cross validation</option>
-                                <option value="5CV">5-fold cross validation</option>
-                                <option value="10CV">10-fold cross validation</option>
+                                <option selected value="LOOCV">Leave One Out Cross Validation</option>
+                                <option value="5CV">5-fold Cross Validation</option>
+                                <option value="10CV">10-fold Cross Validation</option>
                             </select>
                         </div>
                         
                         <div class="form-group" id="minfeatureopt">
                             <label for="minfeature"
-                            title='This parameter enables you to specify the minimum number of features (genes) that should be selected during the Recursive Feature Elimination (RFE) process. By setting this threshold, you can control the extent of feature selection and tailor it to your specific research needs.'
+                            title='This parameter enables you to specify the minimum number of features (genes) that should be selected during the Recursive Feature Elimination (RFE) or or Permutation Feature Importance (PI) feature selection process. By setting this threshold, you can control the extent of feature selection and tailor it to your specific research needs.'
                             >Minimum Feature Selection</label>
                             <input type="number" class="form-control" id="minfeature" name="minfeature" step="1" value="5">
                         </div>
                         
                         <div class="form-group">
                             <label for="classifiers" 
-                            title='Choose one or more machine learning algorithms to perform the classification task. Options include Random Forest (RF), K-Nearest Neighbors (KNN), Gradient Boosting (GB), and Extra Trees Classifier. You can select multiple classifiers to assess how different algorithms impact your analysis.'
+                            title='Choose one or more machine learning algorithms to perform the classification task. Options include Random Forest (RF), K-Nearest Neighbors (KNN), Gradient Boosting (GB), Extra Trees Classifier, and Logistic Regression (LR). You can select multiple classifiers to assess how different algorithms impact your analysis.'
                             >Classifier Selection</label>
                             <select class="form-select" id="classifiers" name="classifiers" multiple>
                                 <option selected value="RF">Random Forest</option>
                                 <option value="KNN">k-Nearest Neighbors</option>
                                 <option value="GB">Gradient Boosting</option>
                                 <option value="ET">Extra Trees</option>
+                                <option value="LR">Logistic Regression</option>
                             </select>
                         </div>
                         
                         <div class="form-group" id="crossvalopt">
                             <label for="crossval" 
-                            title='This option is relevant when no validation set is chosen. By selecting a cross-validation method, such as leave-one-out cross-validation (LOOCV), 5-fold cross-validation (5-fold CV), or 10-fold cross-validation (10-fold CV), you can rigorously assess the performance of your trained models. Cross-validation ensures the reliability and generalization of your classification results in the absence of a separate validation set.'
+                            title='Opting for a Cross-Validation technique, such as 3-fold Cross-Validation (3FCV), 5-fold Cross-Validation (5FCV), or 10-fold Cross-Validation (10FCV), enables a thorough evaluation of your trained models, ensuring robust performance assessment before application to the test set.'
                             >Cross-Validation Option for Final Evaluation</label>
                             <select class="form-select" id="crossval" name="crossval">
-                                <option value="LOOCV">Leave One Out Cross Validation</option>
-                                <option value="3CV">3-fold cross validation</option>
-                                <option selected value="5CV">5-fold cross validation</option>
-                                <option value="10CV">10-fold cross validation</option>
+                                <option value="3CV">3-fold Cross Validation</option>
+                                <option selected value="5CV">5-fold Cross Validation</option>
+                                <option value="10CV">10-fold Cross Validation</option>
                             </select>
                         </div>
 
                         <!-- RUVSeq options -->
                         <div class="form-group">
                             <label for="k_factor" 
-                            title='When you select RUVSeq as the primary normalization method, you will be utilizing the RUVg function. The performance of this function is directly influenced by the number of unwanted variation factors that need to be estimated from the data. At this point, you have the flexibility to specify the number of these factors.'
+                            title='When you select RUVSeq as the primary normalisation method, you will be utilising the RUVg function. The performance of this function is directly influenced by the number of unwanted variation factors that need to be estimated from the data. At this point, you have the flexibility to specify the number of these factors.'
                             >RUVSeq k factor<i class="bi bi-question-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" title="This is the explanation of the k Factor argument."></i></label>
                             <input type="number" class="form-control" id="k_factor" name="k_factor" step="1" value="1">
                         </div>
                         
                         <div class="form-group">
                             <label for="refgenes"
-                            title='The choice of reference genes in RUVSeq is crucial for accurate data normalization. Reference genes should be stable and not differentially expressed across conditions.'
+                            title='Choosing suitable reference genes in RUVSeq is crucial for accurate data normalization. It is imperative that these genes maintain stability and show no differential expression across various conditions. The geNorm function aids in identifying the most stable genes, which are then employed as reference genes in the RUVg function. You have the option to specify the feature types on which geNorm will be applied to determine the most stable genes used as reference genes.'
                             >How to Choose Reference Genes for RUVSeq Analysis?</label>
                             <select class="form-select" id="refgenes" name="refgenes">
-                                <option selected value="endNhk">Endogenous and Housekeeping targets</option>
-                                <option value="end">Endogenous targets</option>
+                                <option selected value="hkNpos">Housekeeping and Positive Control targets</option>
                                 <option value="hk">Housekeeping targets</option>
                                 <option value="posCtrl">Positive Controls</option>
+                                <option value="endNhkNpos">Endogenous Housekeeping and Positive Control targets</option>
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label for="min_refgenes" 
+                            title='Minimum number of reference (stable) genes to consider for the RUVg function.'
+                            >Minimum Number of Reference Genes in RUVSeq<i class="bi bi-question-circle-fill" data-bs-toggle="tooltip" data-bs-placement="top" ></i></label>
+                            <input type="number" class="form-control" id="min_refgenes" name="min_refgenes" step="1" value="5">
+                        </div>
+
                     </div>
 
                 </form>
