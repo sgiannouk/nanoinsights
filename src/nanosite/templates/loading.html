@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing</title>
+    <link rel="stylesheet" href="{% static 'css/loading_style.css' %}">
+</head>
+<body class="loading-page">
+
+    <div class="roadmap-container">
+        <!-- Interactive SVG Roadmap -->
+        <object id="roadmap" type="image/svg+xml" data="{% static 'svg/loading_roadmap.svg' %}"></object>
+    </div>
+
+    <div class="log-container">
+        <div id="loading-screen" class="loading-screen">
+            <div class="spinner"></div>
+            <p>Running NanoInsights...</p>
+        </div>
+
+    </div>
+
+    <script src="{% static 'js/loading_script.js' %}"></script>
+</body>
+</html>

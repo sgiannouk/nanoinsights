@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+:root {
+    /* --color-default: #F5F0BB; */
+    --color-default: #04324d;
+    --color-text: #76ABAE;
+    --color-second: #90be6d;
+    --color-white: #FFF;
+    --color-icewhite: #f5f7f4;
+    --color-select: #74CEF7;
+    /* --color-body: #343a40; */
+    --color-body: #413F42;
+    --color-lightbody: #727f8c;
+    --color-button: #176B87;
+    --color-submitbutton: linear-gradient(45deg, #FF5733, #0099CC, #66CC00);
+    --color-search: #c0ca9a;
+    --color-textdeactived: #6a6b6e;
+
+      /* Transition */
+    --tran-03: transform 0.3s ease-in-out;
+    --tran-04: all 0.4s ease;
+    --tran-05: all 0.5s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--color-body);
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+}
+
+.sidebar {
+    min-height: 100vh;
+    width: 78px;
+    padding: 20px 14px 10px;
+    z-index: 99;
+    background-color: var(--color-default);
+    transition: var(--tran-05);
+    position: fixed;
+    top:0;
+    left: 0;
+}
+
+.sidebar.open {
+    width: 250px;
+}
+
+.sidebar .logo_details {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: 15px;
+}
+
+.sidebar .logo_details .icon {
+    opacity: 0;
+    transition: var(--tran-05);
+}
+
+.sidebar .logo_details .logo_name{
+    opacity: 0;
+    transition: var(--tran-05);
+    max-width: 60%;
+    transform: translateX(30%);
+}
+
+.sidebar.open .logo_details .icon,
+.sidebar.open .logo_details .logo_name {
+    opacity: 1;
+}
+
+.sidebar .logo_details #btn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-40%);
+    font-size: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: var(--tran-05);
+}
+
+.sidebar.open .logo_details #btn {
+    text-align: right;
+}
+
+.sidebar ul {
+    text-decoration: none;
+    padding: 0;
+}
+
+.sidebar i {
+    color:var(--color-text);
+    height: 60px;
+    line-height: 60px;
+    min-width: 50px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.sidebar .nav-list {
+    margin-top: 60px;
+    height: 100%;
+}
+
+.sidebar li {
+    position: relative;
+    margin: 26px 0;
+    list-style: none;
+}
+
+.sidebar li .tooltip{
+    position: absolute;
+    top: -20px;
+    left: calc(100% + 15px);
+    z-index: 3;
+    background-color: var(--color-text);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+    padding: 6px 14px;
+    font-size: 15px;
+    font-weight: 400;
+    border-radius: 5px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.sidebar li:hover .tooltip{
+    opacity: 1;
+    pointer-events: auto;
+    transition: var(--tran-04);
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--color-white);
+}
+
+.sidebar.open li .tooltip {
+    display: none;
+}
+
+.sidebar input {
+    font-size: 15px;
+    color: var(--color-text);
+    font-weight: 400;
+    outline: none;
+    height: 35px;
+    width: 35px;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--color-search);
+    transition: var(--tran-05);
+}
+
+.sidebar input::placeholder {
+    color:var(--color-text);
+}
+
+.sidebar.open input{
+    padding: 0 20px 0 50px;
+    width: 100%;
+}
+
+.sidebar .bx-search {
+    position: absolute;
+    top:50%;
+    left:0;
+    transform: translateY(-50%);
+    font-size: 22px;
+    background-color: var(--color-search);
+    color: var(--color-text);
+}
+
+#searchProjectInput {
+    color: #3C552D;
+}
+
+.sidebar li a {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    text-decoration: none;
+    background-color: var(--color-default);
+    position: relative;
+    transition: var(--tran-05);
+    z-index: 12;
+}
+    
+.sidebar li a::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: scaleX(0);
+    background-color: var(--color-text);
+    border-radius: 5px;
+    transition: var(--tran-03);
+    transform-origin: left;
+    z-index: -2;
+}
+
+#myAnalysis.inactive {
+    pointer-events: none;
+    color: var( --color-textdeactived);
+    text-decoration: none;
+    background-color: transparent;
+}
+
+#myAnalysis.inactive:hover {
+    background-color: transparent;
+    color: var( --color-textdeactived);
+    text-decoration: none;
+}
+
+#myAnalysis.inactive::after {
+    content: '';
+    transform: scaleX(0);
+    background-color: transparent;
+    transition: none; /* Disable transition */
+}
+
+#myAnalysis.inactive + .tooltip {
+    display: none; /* Hide tooltip for inactive state */
+}
+
+.sidebar li a:hover::after {
+    transform: scaleX(1);
+    background-color: var(--color-text);
+    color: var(--color-default);
+}
+
+.sidebar li a .link_name {
+    color: var(--color-text);
+    font-size: 15px;
+    font-weight: 400;
+    white-space: nowrap;
+    pointer-events: auto;
+    transition: var(--tran-04);
+    pointer-events: none;
+    opacity: 0;
+}
+
+.sidebar li a:hover .link_name,
+.sidebar li a:hover i {
+    color: var(--color-white);
+    transition: var(--tran-05);
+}
+
+#myAnalysis.inactive:hover .link_name,
+#myAnalysis.inactive:hover i {
+    color: gray; /* Keep text gray on hover */
+    transition: none; /* Disable transition */
+}
+
+.sidebar.open li a .link_name {
+    opacity: 1;
+    pointer-events: auto;
+} 
+
+.sidebar li i{
+    height: 35px;
+    line-height: 35px;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+/* Search bar */
+#search-bar {
+    display: none;
+    position: sticky;
+    padding-left: 10px;
+    color: #9ca3af;
+    font-size: 10px;
+}
+
+#search-bar input[type="text"] {
+    width: 180px; /* Adjust the width as needed */
+    height: 40px; /* Adjust the height as needed */
+    font-size: 14px; /* Adjust the font size as needed */
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    margin-top: -10px;
+    flex: 1;
+    }
+
+#search-bar button {
+    height: 25px; /* Adjust the height to match the input field */
+    width: 60px;
+    font-size: 12px; /* Adjust the font size as needed */
+    border-radius: 5px;
+    margin-top: 5px;
+    background-color: #176B87;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+#search-bar input[type="text"]::placeholder {
+    font-size: 14px;
+    text-align: center;
+}
+
+.bx-play {
+    transform: scale(1.5);
+}
+
+.inactive {
+    pointer-events: none;
+    color: grey !important;
+    opacity: 0.6;
+}

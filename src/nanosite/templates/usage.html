@@ -1,0 +1,271 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to use?</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/usage_style.css' %}" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 ">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-insights-tab" data-toggle="tab" href="#nav-insights" role="tab" aria-controls="nav-insights" aria-selected="true">Guidance and Insights</a>
+                        <a class="nav-item nav-link" id="nav-video-tab" data-toggle="tab" href="#nav-video" role="tab" aria-controls="nav-video" aria-selected="false">Video Tutorial</a>
+                    </div>
+                </nav>
+
+                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                    <!-- Guidance and Insights -->
+                    <div class="tab-pane fade show active" id="nav-insights" role="tabpanel" aria-labelledby="nav-insights-tab">
+                        <h1 id="roadtitle">NanoInsights Roadmap</h1>
+
+                        <img id="roadmapimage" src="{% static 'img/scheme.png' %}" alt="Roadmap scheme">
+
+                        <!-- Section 1: Uploading Data -->
+                        <section class="usage-upload">
+                            <h2>Uploading your Data</h2>
+                            <p>
+                                NanoInsights streamlines the data submission process, accommodating nCounter raw data in the RCC format. You can effortlessly upload RCC files individually or opt for a more organised approach by consolidating them into a single zipped file (.zip) or a tape archive (.tar.gz) for submission.
+                            </p>
+                            </p>
+                                In addition to the raw data, we require a clinical sample information table to accompany your data for comprehensive analysis. Ensure the clinical information table is submitted in a comma-delimited format, compatible with both <b>.csv</b> and <b>.txt</b> formats. The table should include, at a minimum, the essential headers: "<b>Filename</b>" and "<b>Condition</b>", with the exact format (first letter of each header capitalised). Feel free to enrich the table with additional clinical information tailored to your needs. For your convenience, an example clinical data file, aligning with the required input format, is available for reference <a href="https://github.com/sgiannouk/nanoinsights/blob/main/test_data/clinical_data.txt">here</a>.
+                            </p>
+                            <p>
+                                To streamline the process, both files can be uploaded conveniently from the "Upload Your Data" section of NanoInsights. Users have the flexibility to select files from the menu or simplify the process further by dragging and dropping the files into the designated areas.
+                            </p>
+                        </section>
+
+                        <!-- Section 2: Fine-Tuning Parameters -->
+                        <section class="usage-parameters">
+                            <h2>Fine-Tuning Parameters</h2>
+                            <p>
+                                When navigating NanoInsights, you'll encounter four distinct parameter sets critical to shaping your data analysis. Located within the "<b>Upload Your Data</b>" section, these initial parameters lay the foundation for your analysis. Key among them are uploading raw data, submitting the clinical data table, and selecting the "<b>Control Group</b>" and "<b>Condition Group</b>". These choices, based on your clinical data, are essential for both differential expression analysis and classification, significantly impacting the insights you derive. Once you upload your clinical data, the options will populate automatically in the drop-down menu. Please note that exactly two groups must be defined, and the group annotations are derived from the clinical data, so consistency in annotation is crucial.
+                            </p>
+                            <p>
+                                Another critical parameter in this section is "<b>Select the Classification Testing Type</b>". This parameter is paramount for the machine learning analysis of your data and dictates how you evaluate your results. Offering multiple options for testing the classification modelling process, the default choice is "<b>Split</b>", dividing your data into an 80-20% split for training and testing. Alternatively, "<b>Runs</b>" enables the selection of all samples from a specific run (loaded in a single cartridge) as the test set, while the rest serve as the training set. Notably, when choosing "Runs",  an additional box appears for selecting one or more runs. The "<b>External Set</b>" option prompts you to upload extra raw and clinical data for use as a test set. Alternatively, the "<b>Only Normalisation</b>" option allows for performing only normalisation analysis, omitting the classification analysis entirely.
+                            </p>
+                            <p>
+                                For a comprehensive understanding of each parameter, <u>detailed descriptions and explanations are readily accessible by hovering over their titles</u>. This ensures a well-informed and precise analysis process tailored to your specific research needs.
+                            </p>
+                        </section>
+
+                        <!-- Section 3: QC and Exploratory Analysis -->
+                        <section class="usage-qc">
+                            <h2>Quality Control and Exploratory Analysis</h2>
+                            <p>
+                                Once your data is successfully uploaded, and you've either fine-tuned the parameters or kept the default settings, NanoInsights initiates a preliminary quality control (QC) process. This comprehensive QC phase includes the execution of NanoString's standard general assay performance checks, covering Imaging, Binding Density, Positive Control Linearity, and Limit of Detection. For a detailed understanding of each metric, you can refer to <a href="https://www.youtube.com/watch?v=p68gui4bMos&ab_channel=NanoString">NanoString's Guidelines</a>, providing comprehensive insights into the analysis of each parameter. Following this, you'll gain access to multiple figures and a detailed data table, offering a comprehensive overview of each sample's performance in your dataset. This resource is invaluable for assessing the quality and reliability of your data.
+                            </p>
+                            <p>
+                                After the initial QC phase, a meticulous exploratory analysis takes place. This analysis includes key components such as <a href="https://en.wikipedia.org/wiki/Box_plot">Box Plots</a> of the raw data, a Principal Component Analysis (<a href="https://en.wikipedia.org/wiki/Principal_component_analysis">PCA</a>) plot, a Multidimensional scaling (<a href="https://en.wikipedia.org/wiki/Multidimensional_scaling">MDS</a>) plot, and an Interquartile Range (<a href="https://en.wikipedia.org/wiki/Interquartile_range">IQR</a>) analysis. These analytical methods are essential for quality assessment and exploring the relationship between samples. Furthermore, they play a crucial role in identifying potential outlier samples within your data and detecting any batch effects that may be present.
+                            </p> 
+                        </section>
+
+                        <!-- Section 4: Filtering steps -->
+                        <section class="usage-filter">
+                            <h2>Filtering</h2>
+                            <p>
+                                NanoInsights provides users with the flexibility to apply various standard and mild gene and sample filters, easily accessible through the "Filters" section on the home page. Four main filters can be activated to refine your data:
+
+                                <ul> 
+                                    <b>Filter Lowly Expressed Genes:</b> This filter employs the edgeR function "<a href="https://rdrr.io/bioc/edgeR/man/filterByExpr.html">filterByExpr</a>" to statistically identify and eliminate genes with low expression levels, thereby enhancing the overall quality of your data.
+                                </ul>
+                                <ul>
+                                    <b>Filter Genes Based on Negative Controls:</b> This filter utilises Negative Control (<a href="https://nanostring.com/wp-content/uploads/Gene_Expression_Data_Analysis_Guidelines.pdf">NC</a>) probes in your assay to screen out targets with inadequate expression and high background noise. The background noise is initially computed by taking the mean of each sample's NC, increased by two times the standard deviation, and then subtracted from each sample. Any endogenous target with a score of less than or equal to 0 in over 85% of the examined samples is excluded from further analysis.
+                                </ul>
+                                <ul>
+                                    <b>Filter Samples Based on the Negative Controls:</b> Building upon the methodology of the second filter, the third filter, "Filter Samples Based on the Negative Controls," involves excluding samples if over 85% of the genes do not meet the criteria set in the earlier "Filter Genes Based on Negative Controls" filter.
+                                </ul>
+                                <ul>
+                                    <b>Remove Outlier Samples:</b> This filter is rooted in the IQR analysis. Samples identified as outliers in the IQR analysis are systematically excluded from downstream analysis. To provide users with flexibility, a customisable cutoff is available in the “Filters” section.
+                                </ul>
+
+                                Upon applying any of these filtering steps, NanoInsights automatically generates additional files that detail the exclusion of genes and/or samples from downstream analysis. Subsequently, your filtered data undergoes re-evaluation through visualisations, including a PCA plot, an MDS plot, and a sample correlation Heatmap plot. These visualisations provide an insightful and comprehensive perspective on how the applied filters influence and shape your dataset.
+                            </p>
+                        </section>
+
+                        <!-- Section 5: Normalisation and Differential Expression -->
+                        <section class="usage-normalisation">
+                            <h2>Normalisation and Differential Expression</h2>
+                            <p>
+                                Users have the flexibility to select their preferred normalisation method within the "<b>Differential Expression</b>" section of NanoInsights, offering a diverse range of <u>eight methods</u>, with the default choice set to "<b>Auto-detection</b>". Notably, the "Auto-detection" option assesses all provided normalisation methods and selects the most optimal one based on the minimum mean Relative Log Expression (MRLE) score. For a comprehensive understanding of each normalisation method, please consult the table below.
+                            </p>
+                            <br>
+                            <table>
+                                <thead>
+                                    <tr>
+                                    <th>Normalisation Method</th>
+                                    <th>Explanation</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                    <td><strong>nSolver</strong></td>
+                                    <td>Employs the standard nSolver normalisation, a conventional method for normalising data.</td>
+                                    </tr>
+                                    <tr>
+                                    <td><strong>Housekeeping Scaling</strong></td>
+                                    <td>Normalises counts by utilising a scaling factor, calculated by dividing the geometric mean of built-in housekeeping genes per sample by the arithmetic mean of their geometric means. </td>
+                                    </tr>
+                                    <tr>
+                                    <td><strong>Housekeeping geNorm</strong></td>
+                                    <td>Normalises counts based on housekeeping genes selected for their stable expression by the geNorm algorithm. Scaling factors depend on the geometric mean of these steadfast housekeeping genes, aligning with the approach used in Housekeeping Scaling.</td>
+                                    </tr>
+                                    <tr>
+                                    <td><strong>Endogenous and Housekeeping Scaling</strong></td>
+                                    <td>Normalises counts using scaling factors generated by the ratio of the geometric mean of all counts (endogenous and housekeeping) per sample to the arithmetic mean of their geometric means. </td>
+                                    </tr>         
+                                    <tr>
+                                    <td><strong>Quantile</strong></td>
+                                    <td>Data is normalised by giving each sample in the dataset the same distribution. The mean quantiles are used to substitute the value of the data point in the original sample.
+                                    </td>
+                                    </tr>
+                                    <tr>
+                                    <td><strong>Cyclic Loess</strong></td>
+                                    <td>Data is normalised by giving each sample in the dataset the same distribution. The mean quantiles are used to substitute the value of the data point in the original sample.</td>
+                                    </tr>
+                                    <tr>
+                                    <td><strong>Variance Stabilising Normalisation (VSN)</strong></td>
+                                    <td>Data is normalised by parametric transformation based on a model of variance-versus-mean dependence.</td>
+                                    </tr>
+                                    <tr>
+                                    <td><strong>RUVSeq</strong></td>
+                                    <td>Utilising the RUVg function from the RUVSeq package to account for technical bias. The RUVg method normalises data based on reference  genes. The user can choose the target genes and geNorm will detective most stable ones that will be used in the RUVg function.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br>
+                            <p>
+                                In addition, users can customise the differential expression (DE) analysis by specifying the log2 Fold Change Threshold and the adjusted p-value within the "Differential Expression" section of NanoInsights.
+                            </p>
+                            <p>
+                                Among the normalisation methods, <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4404308/"><b>RUVSeq</b></a> stands out, addressing the detection and correction of unwanted variation. The RUVSeq option utilises the <a href="https://bioconductor.org/packages/release/bioc/vignettes/RUVSeq/inst/doc/RUVSeq.html#ruvg-estimating-the-factors-of-unwanted-variation-using-control-genes">RUVg</a> function to estimate factors of unwanted variation. In the "<b>Advanced Options</b>", users can fine-tune three parameters related to RUVSeq: the k factor, the choice of reference genes, and the minimum number of reference genes.
+                            </p>
+
+                            <p>
+                                Once the normalisation method is selected, and cutoff values are specified, the DE analysis seamlessly commences. This analysis produces a comprehensive output, including a data table with normalised counts and complementary statistical metrics. Furthermore, interactive visualisations take centre stage for a detailed examination of the normalisation method and an overview of the DE analysis. These visualisations, leveraging the normalised data, include a PCA plot, a Relative log expression (<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5798764/">RLE</a>) plot, a <a href="https://datavizcatalogue.com/methods/density_plot.html">Density plot</a>, Hierarchical Clustering Analysis (<a href="https://en.wikipedia.org/wiki/Hierarchical_clustering">HCA</a>) of the samples plot, and a <a href="https://en.wikipedia.org/wiki/Volcano_plot_(statistics)">Volcano plot</a>. These visualisations offer valuable insights into the normalisation process and contribute to a thorough understanding of the DE analysis.
+                            </p>
+                        </section>
+
+                        <!-- Section 6: Supervised Learning -->
+                        <section class="usage-ml">
+                            <h2>Supervised Learning</h2>
+                            <p>
+                                The normalised counts serve as the cornerstone for subsequent classification in NanoInsights. The classification process involves several pivotal steps. Initially, users may opt for optional pre-processing, which includes the removal of highly correlated and quasi-constant genes, along with optional feature selection. Following this, one or more selected machine learning algorithms undergo training using the provided data to learn class label assignments. Rigorous evaluation of the models takes place through cross-validation techniques, culminating in predictions on the unseen test set.
+                            </p>
+                            <p>
+                                Users are empowered to decide whether to eliminate highly correlated and quasi-constant genes, with these options accessible in the "<b>Advanced Options</b>" section. Subsequently, users encounter four feature selection choices: "<b>Recursive Feature Elimination with Cross-Validation</b>" (<a href="https://www.geeksforgeeks.org/recursive-feature-elimination-with-cross-validation-in-scikit-learn/">RFECV</a>), "<b>Permutation Feature Importance</b>" (<a href="https://christophm.github.io/interpretable-ml-book/feature-importance.html">RFECV</a>), "<b>Differentially Expressed genes</b>" (DE), or <b>no feature selection</b>, with RFECV set as the default. If RFECV is chosen, users may opt for <b>Leave-One-Out Cross-Validation</b> (LOOCV), <b>5-fold Cross-Validation</b> (5-fold CV), or <b>10-fold Cross-Validation</b> (10-fold CV), with the ability to specify the <u>minimum number of selected features</u> for RFECV. Choosing PI allows users to specify the <u>minimum number of selected features</u>, while "DE" uses differentially expressed genes as selected features. Opting for "no feature selection" employs all features for downstream analysis, though this option is not recommended due to potential overfitting.
+                            </p>
+                            <p>
+                                Upon these selections, users can choose one or more of the five provided machine learning algorithms for classification: <b>Random Forest</b> (<a href="https://en.wikipedia.org/wiki/Random_forest">RF</a>), the default option, <b>K-Nearest Neighbors</b> (<a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm">KNN</a>), <b>Gradient Boosting</b> (<a href="https://en.wikipedia.org/wiki/Gradient_boosting">GB</a>), <b>Extra Trees Classifier</b> (<a href="https://towardsdatascience.com/what-when-how-extratrees-classifier-c939f905851c">ETC</a>), and <b>Logistic Regression</b> (<a href="https://en.wikipedia.org/wiki/Logistic_regression">LR</a>). Multiple classifiers can be chosen for the task.
+                            </p>
+                            <p>
+                                To further assess the training of the data, NanoInsights conducts Cross Validation analysis on the training data. Users can choose between three options for cross-validation: <b>3-fold Cross-Validation</b> (3-fold CV), <b>5-fold Cross-Validation</b> (5-fold CV), or <b>10-fold Cross-Validation</b> (10-fold CV). Importantly, the selected model undergoes evaluation beyond Cross Validation through an independent test set, serving as the final evaluation of the classification process.
+                            </p>
+                            <p>
+                                The <b>output</b> of the classification process encompasses a range of valuable results, including a plot indicating the optimal number of features based on RFECV or PI, a table identifying the selected features, a file with comprehensive details and statistics regarding filtering, feature selection, and the training process. Data tables offer a detailed listing of the classification output for both the training and test sets. Additionally, a final table compiles various critical metrics such as Balanced Accuracy, F1-score, Precision, Recall, and more. Several interactive visualisations, such as a <a href="https://towardsdatascience.com/introduction-to-probabilistic-classification-a-machine-learning-perspective-b4776b469453">Class Probabilities</a> plot, a Confusion Matrix (<a href="https://en.wikipedia.org/wiki/Confusion_matrix">CM</a>) Heatmap, and a Receiver Operating Characteristic (<a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">ROC</a>) plot for the training and testing process, enhance the understanding and interpretation of the classification results.
+                            </p>
+                        </section>
+
+                        <!-- Section 7: Enrichment Analysis -->
+                        <section class="usage-enrichment">
+                            <h2>Enrichment Analysis</h2>
+                            <p>
+                                Gene set enrichment analysis (GSEA) is conducted in two phases as part of our process. First, it is performed on the differentially expressed genes, and then it is repeated on the selected features when the RFECV or PI feature selection method is chosen. For these analyses, we leverage the power of <a href="https://biit.cs.ut.ee/gprofiler/"><b>gProfiler</b></a> and <b>g:GOSt</b>, which are instrumental in performing functional enrichment analysis. This type of analysis, also known as over-representation analysis (ORA) or gene set enrichment analysis, is instrumental in uncovering biological insights within the input gene lists. It achieves this by mapping genes to established functional information sources and subsequently identifying statistically significant enrichment of specific terms. Notably, g:GOSt regularly retrieves data from the <a href="https://www.ensembl.org/index.html">Ensembl database</a>, ensuring that the analysis is built upon the latest and most comprehensive functional information available.
+                            </p>
+                        </section>
+
+                        <!-- Section 8: Output and Download of Results -->
+                        <section class="usage-output">
+                            <h2>Output and Download of Results</h2>
+                            <p>
+                                Upon the completion of the analysis, all the aforementioned files, tables, and visualisations are made accessible for download, allowing you to save them locally on your computer. These files and tables are compatible with widely-used software like Microsoft Excel and Word, ensuring ease of access and utilisation.
+                            </p>
+                            <p>
+                                Furthermore, all interactive plots are thoughtfully transformed into high-resolution static figures, making them readily suitable for presentations and inclusion in scientific papers. This ensures that the valuable insights gained from your analysis can be effectively communicated and shared within the scientific community and beyond.
+                            </p>
+                        </section>
+
+                        <!-- Section 9: Search your Analysed Project -->
+                        <section class="usage-search">
+                            <h2>Retrieve Your Project Results</h2>
+                            <p>
+                                The "<b>Find My Project</b>" tab, located in the sidebar, allows you to effortlessly retrieve your analysis results using your unique <u>14-character project ID</u>. This alphanumeric ID is provided when your project is run and serves as your access key to the data. Simply enter your project ID in the field and press <b>Enter</b>. If your project is still available (within 6 months of completion), it will appear in the "<b>My Analysis</b>" tab, where you can view and re-download all results. Please note that projects are stored on our servers for a maximum of 6 months; after this period, they are permanently deleted.
+                            </p>
+                        </section>
+
+                        <!-- Section 10: Crucial Reminders -->
+                        <section class="usage-remarks">
+                            <h2>Crucial Reminders</h2>
+
+                            <ul>
+                                <b>Matching "Filename":</b> The "Filename" column in your clinical data must precisely match the name of each RCC file, including the ".RCC" extension. This one-to-one correspondence is crucial for associating the clinical information with the correct raw data.
+                            </ul>
+                            <ul>
+                                <b>Consistent "Condition":</b> The "Condition" column should be uniform for samples with the same condition.
+                            </ul>
+                            <ul>
+                                <b>Header Uniformity:</b>  It's essential to maintain consistent capitalisation for header labels, ensuring that terms such as "Filename" and "Condition" are capitalised.
+                            </ul>
+                            <ul>
+                                <b>Exclude Special Characters:</b>  We recommend refraining from using special characters such as "-" or "." in file names (aside from standard file extensions, such as .RCC or .txt). Incorporating special characters like "-" or "." in names could potentially trigger premature termination of the NanoInsights software execution.
+                            </ul>
+                            <ul>
+                                <b>Group-comparison:</b> NanoInsights is tailored to facilitate precise two-group comparisons within your data. Please note that our software does not support the analysis of more than two groups from the clinical data file. If your clinical data contains more than two groups, our software will not be able to run the analysis effectively.
+                            </ul>
+                            <ul>
+                                <b>Parameter Information:</b> It's important to note that every option within the NanoInsights website is equipped with comprehensive explanations that become instantly accessible when you hover over the respective option's titles. This user-friendly feature ensures that users can access detailed information and guidance at their fingertips, enhancing their understanding of the available choices and facilitating a smoother and more informed analysis process.
+                            </ul>
+                            <ul>
+                                <b>Testing NanoInsights:</b> Explore the capabilities of NanoInsights without the need for personal data. We provide a pre-loaded dataset ideal for testing with the "split" or "run" option in Classification Testing Type. This dataset consists of 144 early-stage colorectal cancer (CRC) samples, featuring 97 metastasis-negative and 47 metastasis-positive samples. The dataset is obtained from the publicly accessible NCBI Gene Expression Omnibus under the <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi">GSE81983</a> accession. To facilitate user accessibility, the same dataset is accessible in our <a href="https://github.com/sgiannouk/nanoinsights">GitHub repository</a>, complete with pre-processed clinical data, ready for effortless utilisation in NanoInsights. Alternatively, you can directly run the example under the "Run Our Example" tab.
+                            </ul>
+                            <!-- <ul>
+                                <b>Additional Parameter Information:</b> For in-depth information about the various parameters and settings available in NanoInsights, we invite you to explore our <a href="https://github.com/sgiannouk/nanoinsights">GitHub repository</a>. There, you'll find a comprehensive and detailed explanation of each parameter, offering valuable insights into their functionality and how to best utilise them for your specific needs.
+                            </ul> -->
+                            <ul>
+                                <b>Integration with nCounter Analysis System:</b> NanoInsights seamlessly integrates with the nCounter Analysis System by NanoString, ensuring a robust and efficient analysis process. Our software operates behind the scenes to effortlessly process data generated from the nCounter system, providing you with valuable insights and results. It's important to note that our commitment to innovation means that we are continually exploring opportunities to expand our data compatibility. In the future, we may incorporate support for additional data systems to broaden the scope of our platform, offering even more versatility and value to our users.
+
+                            </ul>
+                        </section>
+                        
+                        <br>
+                        
+                        <!-- Section 10: Nanoinsights Licence -->
+                        <section class="usage-licence">
+                            <h2>Licence</h2>
+                            <p>
+                                NanoInsights website operates under the Apache License 2.0, ensuring an open and transparent environment for users to access, utilise, and contribute to our resources.
+                                <br>
+                                <a href="https://github.com/sgiannouk/nanoinsights/blob/main/LICENSE">Apache License 2.0 for NanoInsights</a>
+                            </p>
+                        </section>
+                    </div>
+
+                    <!-- Video Tutorial -->
+                    <div class="tab-pane fade" id="nav-video" role="tabpanel" aria-labelledby="nav-video-tab">
+                        <h1>How to Upload and Analyse Your Data</h1>
+                        <div class="video-container">
+                            <iframe width="750" height="415" src="https://www.youtube.com/embed/your-video-id" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <br>
+                        <p>
+                            In this video, we'll walk you through the process of uploading your data and performing the analysis using our platform.
+                        </p>
+                    </div>
+                </div> 
+            </div>
+        </div>
+    </div>
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    
+</body>
+</html>
+{% endblock %}

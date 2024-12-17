@@ -1,0 +1,509 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %} 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Analysis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/analysis_style.css' %}" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    
+    
+</head>
+<body>
+    <input type="hidden" id="projectId" name="projectId" value="{{ project_id }}">
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 ">
+                <nav>
+                    <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
+                        <a class="nav-item nav-link active" id="nav-qc-tab" data-bs-toggle="tab" href="#nav-qc" role="tab" aria-controls="nav-qc" aria-selected="true">Quality Control</a>
+                        <a class="nav-item nav-link" id="nav-explorations-tab" data-bs-toggle="tab" href="#nav-explorations" role="tab" aria-controls="nav-explorations" aria-selected="false">Exploratory Analysis</a>
+                        <a class="nav-item nav-link" id="nav-iqr-tab" data-bs-toggle="tab" href="#nav-iqr" role="tab" aria-controls="nav-iqr" aria-selected="false">IQR & QC</a>
+                        <a class="nav-item nav-link" id="nav-normalisation-tab" data-bs-toggle="tab" href="#nav-normalisation" role="tab" aria-controls="nav-normalisation" aria-selected="false">Normalisation</a>
+                        <a class="nav-item nav-link" id="nav-de-tab" data-bs-toggle="tab" href="#nav-de" role="tab" aria-controls="nav-de" aria-selected="false">Differential Expression</a>
+                        <a class="nav-item nav-link" id="nav-classification-tab" data-bs-toggle="tab" href="#nav-classification" role="tab" aria-controls="nav-classification" aria-selected="false">Classification</a>
+                        <a class="nav-item nav-link" id="nav-enrichment-tab" data-bs-toggle="tab" href="#nav-enrichment" role="tab" aria-controls="nav-enrichment" aria-selected="false">Enrichment Analysis</a>
+                    </div>
+                    <!-- Thin Download Button -->
+                    <div class="download-bar">
+                        <a href="#" class="btn-thin-download" id="downloadResults">Download Results</a>
+                    </div>
+                </nav>
+                <div class="tab-content py-3 px-3 px-sm-0" id="nav-tabContent">
+                    
+                    <!-- Quality Control -->
+                    <div class="tab-pane fade show active" id="nav-qc" role="tabpanel" aria-labelledby="nav-qc-tab">
+                        
+                        <div class="container">
+                            <!-- Thumbnails in Grid -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div> <!-- Transparent overlay -->
+                                        <iframe id="qcplot1" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/imagingQC.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="qcplot2" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/bindingDensityQC.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="qcplot3" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/positiveLinearityQC.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="qcplot4" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/limitOfDetectionQC.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <!-- Exclude Initial Stats -->
+                                <div class="col-12">
+                                    <iframe src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/initial_stats.html" 
+                                            frameborder="0" class="w-100" style="height: 590px;"></iframe>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal for Enlarged Iframe -->
+                        <div id="nav-qcModal" class="modal">
+                            <span class="close">&times;</span>
+                            <iframe id="nav-qcModalIframe" class="modal-content" frameborder="0"></iframe>
+                        </div>
+
+                    </div>
+                    
+                    <!-- Exploratory Analysis -->
+                    <div class="tab-pane fade" id="nav-explorations" role="tabpanel" aria-labelledby="nav-explorations-tab">
+                        <div class="container">
+                            <!-- First row with two thumbnails -->
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div> <!-- Transparent overlay -->
+                                        <iframe id="eaplot1" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/boxplot1.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="eaplot2" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/boxplot2.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Second row with two thumbnails -->
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="eaplot3" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/pca.unfiltered.condition.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="eaplot4" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/pca.unfiltered.cartridge.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Third row with one thumbnail -->
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="eaplot5" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/mds.unfiltered.condition.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal for Enlarged Iframe -->
+                        <div id="nav-explorationsModal" class="modal">
+                            <span class="close">&times;</span>
+                            <iframe id="nav-explorationsModalIframe" class="modal-content" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- Interquartile Range and QC -->
+                    <div class="tab-pane fade" id="nav-iqr" role="tabpanel" aria-labelledby="nav-iqr-tab">
+                        <div class="container">
+                            <!-- First row with only pqcplot1 -->
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="pqcplot1" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/boxplot.outliers.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Second row with pqcplot2 and pqcplot3 -->
+                            <div class="row mt-3">
+                                {% if pqcplot2_exists %}
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div> <!-- Transparent overlay -->
+                                        <iframe id="pqcplot2" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/pca.filtered.condition.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if pqcplot3_exists %}
+                                <div class="col-md-6">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="pqcplot3" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/mds.filtered.condition.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Third row with only pqcplot4 -->
+                            {% if pqcplot4_exists %}
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="pqcplot4" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/sample.correlation.filtered.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Modal for Enlarged Iframe -->
+                        <div id="nav-iqrModal" class="modal">
+                            <span class="close">&times;</span>
+                            <iframe id="nav-iqrModalIframe" class="modal-content" frameborder="0"></iframe>
+                        </div>
+                    </div>
+
+
+                    <!-- Normalisation -->
+                    <div class="tab-pane fade" id="nav-normalisation" role="tabpanel" aria-labelledby="nav-normalisation-tab">
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="nplot1" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/quantile.normalisation.rle.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Thumbnails in Grid -->
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div> <!-- Transparent overlay -->
+                                        <iframe id="nplot2" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/quantile.normalisation.pca.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="nplot3" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/quantile.normalisation.hclust.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="nplot4" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/quantile.normalisation.density.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal for Enlarged Iframe -->
+                        <div id="nav-normalisationModal" class="modal">
+                            <span class="close">&times;</span>
+                            <iframe id="nav-normalisationModalIframe" class="modal-content" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- Differential Expression -->
+                    <div class="tab-pane fade" id="nav-de" role="tabpanel" aria-labelledby="nav-de-tab">
+                        <div class="container">
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="deplot1" src="/uploads/{{ project_id }}/html_results/trainingset_normalisation/quantile.deanalysis.volcano.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Modal for Enlarged Iframe -->
+                        <div id="nav-deModal" class="modal">
+                            <span class="close">&times;</span>
+                            <iframe id="nav-deModalIframe" class="modal-content" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- Classification -->
+                    <div class="tab-pane fade" id="nav-classification" role="tabpanel" aria-labelledby="nav-classification-tab">
+                        <div class="container">
+                            <div class="row">
+
+                                {% if clplot1_exists %}
+                                <div class="col-12">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="clplot1" src="/uploads/{{ project_id }}/html_results/classification/overall_ROC_plot.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Thumbnails1 in Grid -->
+                            <div class="row mt-3">
+                                {% if clplot11_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div> <!-- Transparent overlay -->
+                                        <iframe id="clplot11" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/RF.TrainingTest.ROCplot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot12_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot12" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/RF.TestSet.ConfusionMatrix.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot13_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot13" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/RF.TestSet.ProbabilityPlot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Thumbnails2 in Grid -->
+                            <div class="row mt-3">
+                                {% if clplot21_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div> <!-- Transparent overlay -->
+                                        <iframe id="clplot21" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/KNN.TrainingTest.ROCplot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot22_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot22" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/KNN.TestSet.ConfusionMatrix.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot23_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot23" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/KNN.TestSet.ProbabilityPlot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Thumbnails3 in Grid -->
+                            <div class="row mt-3">
+                                {% if clplot31_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div> <!-- Transparent overlay -->
+                                        <iframe id="clplot31" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/GB.TrainingTest.ROCplot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot32_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot32" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/GB.TestSet.ConfusionMatrix.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot33_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot33" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/GB.TestSet.ProbabilityPlot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Thumbnails4 in Grid -->
+                            <div class="row mt-3">
+                                {% if clplot41_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div> <!-- Transparent overlay -->
+                                        <iframe id="clplot41" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/ET.TrainingTest.ROCplot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot42_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot42" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/ET.TestSet.ConfusionMatrix.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot43_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot43" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/ET.TestSet.ProbabilityPlot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Thumbnails5 in Grid -->
+                            <div class="row mt-3">
+                                {% if clplot51_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div> <!-- Transparent overlay -->
+                                        <iframe id="clplot51" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/LG.TrainingTest.ROCplot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot52_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot52" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/LG.TestSet.ConfusionMatrix.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+
+                                {% if clplot53_exists %}
+                                <div class="col-md-4">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <div class="click-overlay"></div>
+                                        <iframe id="clplot53" 
+                                                src="/uploads/{{ project_id }}/html_results/classification/LG.TestSet.ProbabilityPlot.html"
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                        <!-- Modal for Enlarged Iframe -->
+                        <div id="nav-classificationModal" class="modal">
+                            <span class="close">&times;</span>
+                            <iframe id="nav-classificationModalIframe" class="modal-content" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- Enrichment Analysis -->
+                    <div class="tab-pane fade" id="nav-enrichment" role="tabpanel" aria-labelledby="nav-enrichment-tab">
+                        <div class="container">
+                            <div class="row">
+
+                                {% if enrplot1_exists %}
+                                <div class="col-12">
+                                    <div class="clickable-thumbnail-wrapper">
+                                        <iframe id="enrplot1" src="/uploads/{{ project_id }}/html_results/classification/enrichment_analysis_plot.html" 
+                                                frameborder="0" class="w-100" style="height: 300px;"></iframe>
+                                    </div>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Modal for Enlarged Iframe -->
+                        <div id="nav-enrichmentModal" class="modal">
+                            <span class="close">&times;</span>
+                            <iframe id="nav-enrichmentModalIframe" class="modal-content" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                    
+                    <!-- Download -->
+                    <!-- <div class="tab-pane fade" id="nav-download" role="tabpanel" aria-labelledby="nav-download-tab">
+                        Download
+                    </div> -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+    <script src="{% static 'js/analysis_script.js' %}"></script>
+</body>
+</html>
+{% endblock %}

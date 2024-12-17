@@ -1,0 +1,22 @@
+# Ignore virtual environment
+bin/
+include/
+lib/
+pyvenv.cfg
+
+# Exclude system files
+__pycache__/
+*.pyc
+*.pyo
+*.DS_Store
+
+# Exclude editor/IDE settings
+.vscode/
+.idea/
+
+# Exclude personal files
+*.docx
+
+# Exclude shared folder if not needed
+share/
+etc/

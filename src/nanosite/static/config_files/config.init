@@ -1,0 +1,47 @@
+[General]
+projectID = None
+instrument = max-flex
+threads = 10
+version = 1.0.0
+
+[IO]
+dir = None 
+clinicaldata = None 
+outdir = None
+control = None 
+condition = None 
+testtype = None 
+testrun = None
+
+[TestSet]
+testdir = None
+testclinicaldata = None
+
+[DE]
+norm = auto
+lfcthreshold = 0.5
+padjusted = 0.05
+
+[RUVSeq]
+k_factor = 1
+refgenes = hkNpos
+minref = 5
+
+[EnrichmentAnalysis]
+reforg = hsapiens
+
+[Filters]
+filter_lowlyExpr_genes = False
+filter_genes_on_negCtrl = True
+filter_samples_on_negCtrl = True
+remove_outlier_samples = False
+iqrcutoff = 2
+
+[ML]
+correlated = True
+quasiconstant = True
+featureselection = RFE
+rfecrossval = 10CV
+minfeature = 5
+classifiers = RF
+crossval = 5CV

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NanoInsights Example</title>
+    <link rel="stylesheet" href="{% static 'css/example_style.css' %}">
+</head>
+<body>
+
+    <div class="container">
+        <div class="jumbotron">
+            <!-- <h2 class="display-4 gradient-text">Explore NanoInsights with Example Data</h2> -->
+            <h1 id="exampleTitle">Explore NanoInsights with Example Data</h1>
+            <div class="example-description">
+                <div class="info-box">
+                    <p>
+                        This example demonstrates how to use NanoInsights. All fields are pre-filled with example data 
+                        to give you an idea of how the tool works. You can adjust the fields and explore the analysis functionality.
+                    </p>
+                    <p><strong>About the Example Dataset:</strong></p>
+                    <ul class="example-dataset-details">
+                        <li><strong>Control Group:</strong> Healthy Control Samples</li>
+                        <li><strong>Condition Group:</strong> Disease-Affected Samples</li>
+                        <li><strong>Number of Genes:</strong> 20,000</li>
+                        <li><strong>Machine Learning Models:</strong> Random Forest, Gradient Boosting</li>
+                    </ul>
+                    <p>
+                        This dataset represents a simulated NanoString analysis comparing healthy controls 
+                        against disease-affected samples, preloaded for quick testing and learning.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container form-container">
+        {% include "form_section.html" %}
+    </div>
+
+    <script id="prefilled-data" type="application/json">
+        {{ prefilled_data|safe }}
+    </script>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/example_script.js' %}"></script>
+
+</body>
+</html>
+{% endblock %}

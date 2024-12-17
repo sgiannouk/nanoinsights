@@ -1,0 +1,35 @@
+#exampleTitle{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 60px;
+}
+
+.form-container {
+    margin-top: 30px; /* Adjust value as needed */
+}
+
+.info-box {
+    border-left: 4px solid #c0ca9a; /* Blue border on the left */
+    background-color: #f8f9fa;     /* Light gray background */
+    padding: 20px;                 /* Padding inside the box */
+    margin-top: 10px;              /* Space above the box */
+    border-radius: 5px;            /* Rounded corners */
+    font-size: 1rem;               /* Font size for text */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.info-box p {
+    margin: 0 0 10px 0; /* Margin for spacing paragraphs */
+    font-weight: 500;   /* Slightly bold text */
+}
+
+.info-box ul {
+    margin: 10px 0 0 0; /* Top margin for the list */
+    padding-left: 20px; /* Indentation for list items */
+    list-style-type: disc; /* Use bullet points */
+}
+
+.info-box ul li {
+    margin-bottom: 5px; /* Space between list items */
+}
+

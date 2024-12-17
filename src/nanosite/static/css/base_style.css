@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    color: var(--color-body);
+}
+
+.content {
+    position: relative;
+    background-color: var(--color-white);
+    min-height: 100vh;
+    top:0;
+    left:78px;
+    width: calc(100% - 78px);
+    transition: var(--tran-05);
+    z-index: 2;
+    padding: 20px 40px 80px 40px;
+}
+
+.content .text{
+    display: inline-block;
+    color: var(--color-body);
+    font-size: 25px;
+    font-weight: 500;
+    margin: 18px;
+}
+
+.sidebar.open ~ .content{
+    left: 250px;
+    width: calc(100% - 250px);
+}

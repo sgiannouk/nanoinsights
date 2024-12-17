@@ -1,0 +1,117 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/sidebar_style.css' %}">
+</head>
+<body>
+    <input type="hidden" id="projectId" name="projectId" value="{{ project_id }}">
+
+
+    <div class="sidebar open">
+        <div class="logo_details">
+            <a href="/">
+                <img class="logo_name" src="{% static 'img/logo.png' %}" alt="nStringAnalysis Logo">
+            </a>
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+    
+    
+        <ul class="nav-list">
+            <!-- Getting Started -->
+            <li>
+                <a href="/">
+                    <i class='bx bx-home icon'></i>
+                    <span class="link_name">Getting Started</span>
+                </a>
+                <span class="tooltip">Getting Started</span>
+            </li>
+
+            <li>
+                <a href="{% url 'usage' %}">
+                    <i class='bx bx-book-open icon' ></i>
+                    <span class="link_name">How to use?</span>
+                </a>
+                <span class="tooltip">How to use?</span>
+            </li>
+
+            <li>
+                <a href="{% url 'example' %}" id="example">
+                    <i class='bx bx-play'></i>
+                    <span class="link_name">Run Example</span>
+                </a>
+                <span class="tooltip">Run Example</span>
+            </li>
+
+            <!-- <li class="nav-item">
+                {% if project_id %}
+                    <a href="{% url 'input_project:analysis' project_id=project_id %}" id="myAnalysis" class="inactive">
+                        <i class='bx bx-bar-chart icon'></i>
+                        <span class="link_name">My Analysis</span>
+                    </a>
+                {% else %}
+                    <a href="#" id="myAnalysis" class="inactive disabled" title="Project not initialized">
+                        <i class='bx bx-bar-chart icon'></i>
+                        <span class="link_name">My Analysis</span>
+                    </a>
+                {% endif %}
+                <span class="tooltip">My Analysis</span>
+            </li> -->
+            <li class="nav-item">
+                <a href="#" id="myAnalysis" class="inactive disabled" title="Project not initialized">
+                    <i class='bx bx-bar-chart icon'></i>
+                    <span class="link_name">My Analysis</span>
+                </a>
+                <span class="tooltip">My Analysis</span>
+            </li>
+
+            <li>
+                <i class="bx bx-search"></i>
+                <input type="text" id="searchProjectInput" placeholder="Find my project" onkeydown="handleSearch(event)">
+                <span class="tooltip">Find my project</span>
+            </li>
+
+            <li>
+                <a href="https://github.com/sgiannouk/nanoinsights">
+                    <i class='bx bxl-github icon' ></i>
+                    <span class="link_name">Our repository</span>
+                </a>
+                <span class="tooltip">Our repository</span>
+            </li>
+
+            <li>
+                <a href="https://github.com/sgiannouk/nanoinsights/issues">
+                    <i class='bx bx-bug icon'></i>
+                    <span class="link_name">Report an issue</span>
+                </a>
+                <span class="tooltip">Report an issue</span>
+            </li>
+
+            <li>
+                <a href="{% url 'contact' %}">
+                    <i class='bx bx-envelope icon'></i>
+                    <span class="link_name">Contact us</span>
+                </a>
+                <span class="tooltip">Contact us</span>
+            </li>
+
+            <li>
+                <a href="{% url 'citation' %}">
+                    <i class='bx bxs-quote-alt-left icon' ></i>
+                    <span class="link_name">Cite Us</span>
+                    </a>
+                <span class="tooltip">Cite Us</span>
+            </li>
+        </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/sidebar_script.js' %}"></script>
+
+</body>
+</html>
