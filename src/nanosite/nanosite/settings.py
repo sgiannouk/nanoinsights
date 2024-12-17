@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,7 +17,8 @@ if not os.path.exists(INPUT_PROJECTS_ROOT):
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure--+_meqcofgmf=367ah3s9^=fdeod&))6h5k)^_0iw#6a==)ndu2+@1'
+SECRET_KEY = config('SECRET_KEY')
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Allow iframe embedding from the same origin
 X_FRAME_OPTIONS = 'SAMEORIGIN'
