@@ -263,7 +263,7 @@ def initialize_log():
 # Reading all RCC files
 def read_RCC_files():
     
-    write_log("### READING THE RCC FILES ###", "INFO")
+    write_log("Reading the RCC files", "INFO")
 
     # Initialize variables
     files_in_batches = defaultdict(list)
@@ -314,7 +314,7 @@ def read_RCC_files():
 # Reading the clinical data file
 def read_clinical_data():
     
-    write_log("### READING THE CLINICAL TABLE ###", "INFO")
+    write_log("Reading the clinical data table", "INFO")
 
     clinical_data_path = CONFIG["clinical_data"]
     if not clinical_data_path or not os.path.exists(clinical_data_path):
@@ -371,7 +371,7 @@ def read_clinical_data():
 # Checking class balance between conditions
 def check_class_balance(y_train):
 
-	write_log("### IDENTIFYING THE CLASS BALANCE IN THE DATASET ###", "INFO")
+	write_log("Identifying the class balance in the dataset", "INFO")
 
 	unique_classes, class_counts = np.unique(y_train, return_counts=True)
 
@@ -388,7 +388,7 @@ def check_class_balance(y_train):
 def split_training_test_sets(clinical_data, files_in_batches=None, overall_rcc_files=None):
     
     try:
-        write_log(f"### SPLITTING DATASETS USING {CONFIG['test_type'].upper()} ###", "INFO")
+        write_log(f"Splitting datasets using {CONFIG['test_type'].upper()}", "INFO")
 
         # Define output directories
         test_outdir = os.path.join(CONFIG["output_dir"], "test_set")
@@ -463,7 +463,7 @@ def split_training_test_sets(clinical_data, files_in_batches=None, overall_rcc_f
 def calculate_limit_of_detection(raw_expression):
     
     try:
-        write_log("### STARTING LIMIT OF DETECTION QC CALCULATION ###", "INFO")
+        write_log("Starting Limit Of Detection QC calculations", "INFO")
 
         # Extract 'POS_E(0.5)' and transform to a DataFrame with BCAC_ID
         try:
@@ -511,7 +511,7 @@ def calculate_r_squared(col):
 def calculate_positive_linearity(raw_expression, selected_columns):
     
     try:
-        write_log("### STARTING POSITIVE LINEARITY QC CALCULATION ###", "INFO")
+        write_log("Starting Positive Linearity QC calculations", "INFO")
 
         # Define known log2 values
         log2known = [math.log2(x) for x in [128, 128 / 4, 128 / 16, 128 / 64, 128 / 256, 128 / (256 * 4)]]
@@ -597,7 +597,7 @@ def parse_rcc_file(file_path, expression_dict, code_summary, is_first_file):
 def read_and_process_rcc_files(data_directory, datatype):
     
 	try:
-		write_log(f"### GENERATING THE RAW, pData AND RAW_EXPRESSION FOR THE {datatype.upper()} DATA SET ###", "INFO")
+		write_log(f"Generating the raw, pData, and raw_expression for the {datatype.upper()} data set", "INFO")
 
 		# Gather RCC files
 		rcc_files = glob.glob(os.path.join(data_directory, "*.RCC"))
@@ -703,7 +703,7 @@ def read_and_process_rcc_files(data_directory, datatype):
 # Normalisation of the training or test set
 def normalisation(data_dir, clinical_data, datatype, training_mat=None):
  
-    write_log(f"### NORMALISATION ANALYSIS OF THE {datatype.upper()} SET ###", "INFO")
+    write_log(f"Normalisation analysis of the {datatype.upper()} set", "INFO")
 
     # Determine R script and parameters based on datatype
     if datatype.lower() == "training":
@@ -762,7 +762,8 @@ def normalisation(data_dir, clinical_data, datatype, training_mat=None):
 # Handle processing for 'onlyNorm' validation type
 def handle_only_normalization():
 
-    write_log("### VALIDATION TYPE: ONLY NORMALIZATION ###", "INFO")
+    write_log("#Validation Type: Only Normalisation", "INFO")
+    
     read_and_process_rcc_files(CONFIG["input_dir"], "Normalisation Only")
     normalisation(CONFIG["input_dir"], CONFIG["clinical_data"], "training")
 
@@ -772,14 +773,14 @@ def handle_only_normalization():
 def handle_testset(clinical_data, files_in_batches, overall_rcc_files):
 	
 	if CONFIG["test_type"] == "split":
-		write_log("### TEST TYPE: SPLIT ###", "INFO")
+		write_log("Test Type: SPLIT", "INFO")
 		split_training_test_sets(clinical_data)
 	
 	elif CONFIG["test_type"] == "run":
-		write_log("### TEST TYPE: RUN ###", "INFO")
+		write_log("est Type: RUN", "INFO")
 		split_training_test_sets(clinical_data, files_in_batches, overall_rcc_files)
 	else:
-		write_log("### TEST TYPE: EXTERNAL TEST SET ###", "INFO")
+		write_log("est Type: EXTERNAL TEST SET", "INFO")
 
 	read_and_process_rcc_files(CONFIG["input_dir"], "training")
 	normalisation(CONFIG["input_dir"], CONFIG["clinical_data"], "training")
@@ -852,61 +853,74 @@ def log_elapsed_time(project_id, start_time):
 
 
 def main():
+    
+    global log_file, bd_thresholds
 
-	global log_file, bd_thresholds
+    try:
+        # Initialize arguments and configuration
+        args = parse_arguments()  # Initialise arguments
+        initialise_config(args)  # Initialise configuration
 
-	args = parse_arguments()  # Initialise arguments
-	initialise_config(args)  # Initialise configuration
-	
-	# JSON logging file
-	log_file = os.path.join(CONFIG["output_dir"], f"{CONFIG['projectID']}_log.json")
-	initialize_log()  # Call the function to initialize logging
-	
-	# Define binding density thresholds
-	bd_thresholds = {"max-flex": [0.1, 2.25], "sprint": [0.1, 1.8]}.get(CONFIG['instrument'])
+        # JSON logging file
+        log_file = os.path.join(CONFIG["output_dir"], f"{CONFIG['projectID']}_log.json")
+        initialize_log()  # Call the function to initialize logging
 
-	# Reading the input RCC and clinical data files
-	try:
-		files_in_batches, overall_rcc_files = read_RCC_files()
-		clinical_data = read_clinical_data()
-	except Exception as e:
-	    write_log(f"Error reading input files: {e}", "ERROR")
+        # Define binding density thresholds
+        bd_thresholds = {"max-flex": [0.1, 2.25], "sprint": [0.1, 1.8]}.get(CONFIG['instrument'])
 
+        # Reading the input RCC and clinical data files
+        try:
+            files_in_batches, overall_rcc_files = read_RCC_files()
+            clinical_data = read_clinical_data()
+        except Exception as e:
+            write_log(f"Error reading input files: {e}", "ERROR")
+            raise  # Raise exception to trigger outer except block
 
-	# Determine validation type and process accordingly
-	if CONFIG["test_type"] == "onlyNorm":
-		handle_only_normalization()
-	else:
-		handle_testset(clinical_data, files_in_batches, overall_rcc_files)
+        # Determine validation type and process accordingly
+        if CONFIG["test_type"] == "onlyNorm":
+            handle_only_normalization()
+        else:
+            handle_testset(clinical_data, files_in_batches, overall_rcc_files)
 
-		# Running classification analysis
-		try:
-		    write_log("### CLASSIFICATION ANALYSIS (PYTHON) ###", "INFO")
-		    
-		    # Dynamically determine the script location
-		    ml_script = os.path.join(os.path.dirname(os.path.realpath(__file__)), "nanoinsights_ml.py")
+            # Running classification analysis
+            try:
+                write_log("### CLASSIFICATION ANALYSIS (PYTHON) ###", "INFO")
+                
+                # Dynamically determine the script location
+                ml_script = os.path.join(os.path.dirname(os.path.realpath(__file__)), "nanoinsights_ml.py")
 
-		    # Prepare the command using sys.executable for the current Python interpreter
-		    ml_command = [sys.executable, ml_script, "--config", args.config]
+                # Prepare the command using sys.executable for the current Python interpreter
+                ml_command = [sys.executable, ml_script, "--config", args.config]
 
-		    # Log the assembled command
-		    assembled_command = " ".join(ml_command)
-		    write_log(f"Running Machine Learning command: {assembled_command}", "INFO")
+                # Log the assembled command
+                assembled_command = " ".join(ml_command)
+                write_log(f"Running Machine Learning command: {assembled_command}", "INFO")
 
-		    # Execute the command
-		    result = subprocess.run(ml_command, text=True, capture_output=True)
+                # Execute the command
+                result = subprocess.run(ml_command, text=True, capture_output=True)
 
-		    # Check subprocess results
-		    if result.returncode != 0:
-		        write_log(f"ERROR: Machine Learning script failed.\n{result.stderr}", "ERROR")
-		    else:
-		        write_log(f"Machine Learning script completed successfully:\n{result.stdout}", "INFO")
+                # Check subprocess results
+                if result.returncode != 0:
+                    write_log(f"ERROR: Machine Learning script failed. {result.stderr}", "ERROR")
+                    raise Exception("Machine Learning script failed.")
+                else:
+                    write_log(f"Machine Learning script completed successfully: {result.stdout}", "INFO")
 
-		except Exception as e:
-		    write_log(f"CLASSIFICATION TASK ERROR: {str(e)}", "ERROR")
+            except Exception as e:
+                write_log(f"CLASSIFICATION TASK ERROR: {str(e)}", "ERROR")
+                raise  # Propagate the exception
 
-	compress_results()
+        # Compress results
+        compress_results()
 
-	log_elapsed_time(CONFIG['projectID'], startTime)
+        # Log the elapsed time
+        log_elapsed_time(CONFIG['projectID'], startTime)
+
+        # Log successful completion
+        write_log("### FINISHED SUCCESSFULLY ###", "INFO")
+
+    except Exception as e:
+        write_log(f"An error occurred during execution: {str(e)}", "ERROR")
+
 
 if __name__ == "__main__": main()

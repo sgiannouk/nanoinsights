@@ -48,20 +48,6 @@
                 <span class="tooltip">Run Example</span>
             </li>
 
-            <!-- <li class="nav-item">
-                {% if project_id %}
-                    <a href="{% url 'input_project:analysis' project_id=project_id %}" id="myAnalysis" class="inactive">
-                        <i class='bx bx-bar-chart icon'></i>
-                        <span class="link_name">My Analysis</span>
-                    </a>
-                {% else %}
-                    <a href="#" id="myAnalysis" class="inactive disabled" title="Project not initialized">
-                        <i class='bx bx-bar-chart icon'></i>
-                        <span class="link_name">My Analysis</span>
-                    </a>
-                {% endif %}
-                <span class="tooltip">My Analysis</span>
-            </li> -->
             <li class="nav-item">
                 <a href="#" id="myAnalysis" class="inactive disabled" title="Project not initialized">
                     <i class='bx bx-bar-chart icon'></i>
@@ -69,7 +55,7 @@
                 </a>
                 <span class="tooltip">My Analysis</span>
             </li>
-
+            
             <li>
                 <i class="bx bx-search"></i>
                 <input type="text" id="searchProjectInput" placeholder="Find my project" onkeydown="handleSearch(event)">

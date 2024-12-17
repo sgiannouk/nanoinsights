@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import get_cartridge_ids_view, upload_data_view, search_project_view, delete_project_view, example_view, analysis_view, run_nanoinsights
+from .views import get_cartridge_ids_view, upload_data_view, search_project_view, delete_project_view, example_view, analysis_view, run_nanoinsights, get_log_file
 
 
 app_name = 'input_project'
@@ -12,4 +12,5 @@ urlpatterns = [
     path('example/', example_view, name='example'),
     path('analysis/<str:project_id>/', analysis_view, name='analysis'),
     path('run-nanoinsights/<str:project_id>/', run_nanoinsights, name='run_nanoinsights'),
+    path('log/<str:project_id>/', get_log_file, name='get_log_file'),
 ]

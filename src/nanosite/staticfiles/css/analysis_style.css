@@ -1,0 +1,141 @@
+iframe {
+    /* pointer-events: auto; */
+    pointer-events: none;
+}
+
+.modal-content iframe {
+    pointer-events: auto; /* Allow interactions inside the modal iframe */
+}
+.clickable-thumbnail-wrapper iframe {
+    pointer-events: none; /* Prevent iframe from blocking clicks in thumbnails */
+    z-index: 0;
+}
+
+.nav-tabs {
+    z-index: 1000; /* Ensure tabs are above other content but below modal */
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping onto the next line */
+    overflow-x: auto; /* Add horizontal scroll if necessary */
+    white-space: nowrap; /* Prevent text from wrapping */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+/* Active tab color */
+.nav-item.nav-link.active {
+    color: #90be6d;
+}
+
+/* Inactive tab color */
+.nav-item.nav-link {
+    color: #675D50;
+    padding: 8px 12px; 
+    font-size: 0.9rem; 
+}
+
+.nav-tabs::-webkit-scrollbar {
+    height: 5px; /* Add a thin scrollbar */
+}
+
+.nav-tabs::-webkit-scrollbar-thumb {
+    /* background: #ccc; */
+    border-radius: 10px;
+}
+
+.nav-tabs::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 1050; /* Ensure it overlays everything */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Black background with transparency */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    transition: opacity 0.3s ease; /* Smooth fade-in effect */
+}
+
+.modal.show {
+    display: flex; /* Ensure modal is displayed */
+    opacity: 1; /* Fully visible */
+}
+
+.modal-content {
+    width: 80%; /* Adjust size */
+    max-width: 800px; /* Set a maximum width */
+    height: 80%; /* Adjust size */
+    max-height: 600px; /* Set a maximum height */
+    border: none;
+    background-color: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s ease; /* Smooth transitions */
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #fff;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+}
+
+.clickable-thumbnail-wrapper {
+    padding: 10px;
+    transition: transform 0.1s ease;
+}
+
+.clickable-thumbnail-wrapper:hover {
+    transform: scale(1.1); 
+}
+
+.container .row {
+    margin-bottom: 30px; /* Adds spacing between rows */
+}
+
+/* Add spacing between thumbnails */
+.container .col-md-6 {
+    padding: 20px; /* Adds spacing between columns */
+}
+
+ /* Thin Download Button */
+.download-bar {
+    margin-top: 5px;
+    display: flex;
+    justify-content: flex-end; /* Center the button horizontally */
+    padding: 5px 15px; /* Small padding to make it thin */
+}
+
+.btn-thin-download {
+    display: inline-block;
+    padding: 5px 15px; /* Thin padding for the button */
+    color: #fff;
+    margin-right: 10px;
+    background-color: #04324d;
+    border-radius: 4px;
+    font-size: 0.9rem; /* Small text size */
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.btn-thin-download:hover {
+    background-color: #176B87;
+    text-decoration: none;
+}
+
+.btn-thin-download:active {
+    transform: scale(0.98); /* Slight press effect */
+}
+

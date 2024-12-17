@@ -1,4 +1,6 @@
 import re
+import json
+import uuid
 import shutil
 import os, sys
 import tempfile
@@ -7,9 +9,11 @@ import configparser
 import zipfile, tarfile
 from django.shortcuts import render
 from django.conf import settings
-from django.http import JsonResponse
 from datetime import datetime, timedelta
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse, HttpResponse
+from django.utils.http import urlsafe_base64_encode
+from django.views.decorators.http import require_GET
 from .models import Project
 
 
@@ -376,23 +380,170 @@ def delete_project_view(request):
 
 
 def example_view(request):
+    if request.method == 'POST':
+        # Example file paths
+        example_raw_data = os.path.join(settings.EXAMPLE_DATA_DIR, 'training_set', 'GSE81983_RAW.tar.gz')
+        example_clinical_data = os.path.join(settings.EXAMPLE_DATA_DIR, 'training_set', 'clinical_data.csv')
 
-    # Example dataset paths
-    example_raw_data = os.path.join(settings.EXAMPLE_DATA_DIR, 'training_set', 'example_raw_data.RCC')
-    example_clinical_data = os.path.join(settings.EXAMPLE_DATA_DIR, 'training_set', 'example_clinical_data.csv')
+        # Generate a new project ID
+        project_id = uuid.uuid4().hex[:14]
+        project_dir = os.path.join(settings.INPUT_PROJECTS_ROOT, project_id)
+        training_set_dir = os.path.join(project_dir, 'training_set')
+        os.makedirs(training_set_dir, exist_ok=True)
 
-    # Prefilled data
-    example_data = {
-        "control": "ControlGroup1",
-        "condition": "ConditionGroup2",
-        "norm": "auto",
-        "lfcthreshold": 1.0,
-        "padjusted": 0.05,
-        "raw_files": example_raw_data,
-        "clinical_file": example_clinical_data,
-    }
+        # Copy example data to the project directory
+        shutil.copy(example_raw_data, os.path.join(training_set_dir, 'example_raw_data.tar.gz'))
+        shutil.copy(example_clinical_data, os.path.join(training_set_dir, 'example_clinical_data.csv'))
 
-    return render(request, 'example.html', {"prefilled_data": example_data})
+        # Prefilled data
+        prefilled_data = {
+            "raw_files": "example_raw_data.tar.gz",
+            "clinical_file": "example_clinical_data.csv",
+            "control": "negative",
+            "condition": "positive",
+            "radioGroup": "max-flex",
+        }
+
+        # Retrieve all POST parameters (user selections)
+        user_inputs = {
+            "projectID": project_id,
+            "instrument": request.POST.get("radioGroup", prefilled_data["radioGroup"]),
+            "dir": training_set_dir,
+            "clinicaldata": os.path.join(training_set_dir, prefilled_data["clinical_file"]),
+            "outdir": project_dir,
+            "control": request.POST.get("control", prefilled_data["control"]),
+            "condition": request.POST.get("condition", prefilled_data["condition"]),
+            "testtype": request.POST.get("testingType", "split"),
+            "norm": request.POST.get("norm", "auto"),
+            "lfcthreshold": request.POST.get("lfcthreshold", "0.5"),
+            "padjusted": request.POST.get("padjusted", "0.05"),
+            "reforg": request.POST.get("reforg", "hsapiens"),
+            "filter_lowlyExpr_genes": request.POST.get("filter_lowlyExpr_genes", "false"),
+            "filter_genes_on_negCtrl": request.POST.get("filter_genes_on_negCtrl", "true"),
+            "filter_samples_on_negCtrl": request.POST.get("filter_samples_on_negCtrl", "true"),
+            "remove_outlier_samples": request.POST.get("remove_outlier_samples", "false"),
+            "iqrcutoff": request.POST.get("iqrcutoff", "2"),
+            "correlated": request.POST.get("correlated", "true"),
+            "quasiconstant": request.POST.get("quasiconstant", "true"),
+            "featureselection": request.POST.get("featureselection", "RFE"),
+            "rfecrossval": request.POST.get("rfecrossval", "10CV"),
+            "minfeature": request.POST.get("minfeature", "5"),
+            "classifiers": ", ".join(request.POST.getlist("classifiers[]", ["RF", "GB", "LR"])),
+            "crossval": request.POST.get("crossval", "5CV"),
+            "k_factor": request.POST.get("k_factor", "1"),
+            "refgenes": request.POST.get("refgenes", "hkNpos"),
+            "min_refgenes": request.POST.get("min_refgenes", "5"),
+        }
+
+        # Populate the config file
+        populate_config_file(project_dir, user_inputs)
+
+        # Start backend analysis
+        backend_script = os.path.join(settings.NANOINSIGHTS_BACKEND_DIR, "nanoinsights_init.py")
+        config_path = os.path.join(project_dir, "config.init")
+        command = ["python", backend_script, "--config", config_path]
+
+        subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+        # Pass back success and project_id to front end
+        return JsonResponse({"status": "success", "project_id": project_id})
+
+    else:
+        # Serve the example.html form
+        prefilled_data = {
+            "raw_files": "example_raw_data.tar.gz",
+            "clinical_file": "example_clinical_data.csv",
+            "control": "negative",
+            "condition": "positive",
+            "radioGroup": "max-flex",
+        }
+        return render(request, 'example.html', {"prefilled_data": prefilled_data})
+
+def example_view(request):
+    
+    if request.method == 'POST':
+        
+        try:
+            # Example file paths
+            example_raw_data = os.path.join(settings.EXAMPLE_DATA_DIR, 'training_set')
+            example_clinical_data = os.path.join(settings.EXAMPLE_DATA_DIR, 'training_set', 'example_clinical_data.csv')
+
+            # Generate a new project ID
+            project_id = uuid.uuid4().hex[:14]
+            project_dir = os.path.join(settings.INPUT_PROJECTS_ROOT, project_id)
+            training_set_dir = os.path.join(project_dir, 'training_set')
+            os.makedirs(training_set_dir, exist_ok=True)
+
+
+            # Copy all files from example_raw_data to training_set_dir
+            for item in os.listdir(example_raw_data):
+                source_path = os.path.join(example_raw_data, item)
+                destination_path = os.path.join(training_set_dir, item)
+                if os.path.isfile(source_path):
+                    shutil.copy(source_path, destination_path)
+                elif os.path.isdir(source_path):
+                    # Recursively copy directories
+                    shutil.copytree(source_path, destination_path, dirs_exist_ok=True)
+
+            # Simulate user inputs similar to upload_data_view
+            clinical_file_path = os.path.join(training_set_dir, 'example_clinical_data.csv')
+            
+            user_inputs = {
+                "projectID": project_id,
+                "instrument": "max-flex",
+                "dir": training_set_dir,
+                "clinicaldata": clinical_file_path,
+                "outdir": project_dir,
+                "control": "negative",
+                "condition": "positive",
+                "testtype": request.POST.get("testingType", "split"),
+                "norm": request.POST.get("norm", "auto"),
+                "lfcthreshold": request.POST.get("lfcthreshold", "0.5"),
+                "padjusted": request.POST.get("padjusted", "0.05"),
+                "reforg": "hsapiens",
+                "filter_lowlyExpr_genes": request.POST.get("filter_lowlyExpr_genes", "false"),
+                "filter_genes_on_negCtrl": request.POST.get("filter_genes_on_negCtrl", "true"),
+                "filter_samples_on_negCtrl": request.POST.get("filter_samples_on_negCtrl", "true"),
+                "remove_outlier_samples": request.POST.get("remove_outlier_samples", "false"),
+                "iqrcutoff": request.POST.get("iqrcutoff", "2"),
+                "correlated": request.POST.get("correlated", "true"),
+                "quasiconstant": request.POST.get("quasiconstant", "true"),
+                "featureselection": request.POST.get("featureselection", "RFE"),
+                "rfecrossval": request.POST.get("rfecrossval", "10CV"),
+                "minfeature": request.POST.get("minfeature", "5"),
+                "classifiers": ", ".join(request.POST.getlist("classifiers[]", ["RF", "GB", "LR"])),
+                "crossval": request.POST.get("crossval", "5CV"),
+                "k_factor": request.POST.get("k_factor", "1"),
+                "refgenes": request.POST.get("refgenes", "hkNpos"),
+                "min_refgenes": request.POST.get("min_refgenes", "5"),
+            }
+
+            # Populate the configuration file
+            populate_config_file(project_dir, user_inputs)
+
+            # Simulate a file upload validation step
+            validation_errors = validate_uploaded_files(training_set_dir, clinical_file_path)
+            if validation_errors:
+                return JsonResponse({'status': 'error', 'message': "\n".join(validation_errors)}, status=400)
+
+            # Start backend analysis
+            backend_script = os.path.join(settings.NANOINSIGHTS_BACKEND_DIR, "nanoinsights_init.py")
+            config_path = os.path.join(project_dir, "config.init")
+            command = ["python", backend_script, "--config", config_path]
+
+            subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+
+            # Return success and project ID to the frontend
+            return JsonResponse({
+                "status": "success",
+                "project_id": project_id,
+                "message": "Example analysis started successfully!",
+            })
+
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)}, status=400)
+
+    return
 
 
 # Render the analysis page for a specific project ID.
@@ -452,9 +603,7 @@ def analysis_view(request, project_id):
 
 
 def run_nanoinsights(request, project_id):
-    
     if request.method == "POST":
-        
         try:
             # Path to config
             config_path = os.path.join(settings.INPUT_PROJECTS_ROOT, project_id, "config.init")
@@ -467,31 +616,69 @@ def run_nanoinsights(request, project_id):
 
             # Build the command
             backend_script = os.path.join(settings.NANOINSIGHTS_BACKEND_DIR, "nanoinsights_init.py")
-            # command = ["python3", backend_script, "--config", config_path]
-            command = [sys.executable, backend_script, "--config", config_path]
-            print(f"Running command: {' '.join(command)}")
+            command = ["python", backend_script, "--config", config_path]
+
+            # Log start of the process
+            write_log(project_id, "Starting NanoInsights analysis", "INFO")
 
             # Execute the script
             result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, check=False)
 
-            # Log outputs for debugging
-            print(f"STDOUT: {result.stdout}")
-            print(f"STDERR: {result.stderr}")
-
-            # Check the result and return appropriate response
-            if result.returncode == 0:
-                return JsonResponse({"success": True, "output": result.stdout.strip()})
-            else:
+            # Check the result and log appropriately
+            if result.returncode != 0:
+                write_log(project_id, f"Error in NanoInsights script execution.\nSTDOUT:\n{result.stdout}\nSTDERR:\n{result.stderr}", "ERROR")
                 return JsonResponse({
                     "success": False,
-                    "error": "NanoInsights script failed to execute.",
+                    "error": "NanoInsights script execution failed.",
                     "stderr": result.stderr.strip(),
-                    "stdout": result.stdout.strip(),
                 })
+            else:
+                write_log(project_id, "### FINISHED SUCCESSFULLY ###", "INFO")
+                return JsonResponse({"success": True, "output": result.stdout.strip()})
 
         except Exception as e:
-            # Catch unexpected errors
+            write_log(project_id, f"Unexpected error: {str(e)}", "ERROR")
             return JsonResponse({"success": False, "error": f"An unexpected error occurred: {str(e)}"})
 
-    # If not a POST request
     return JsonResponse({"success": False, "error": "Invalid request method. Use POST."})
+
+# Write a log message to the project's log file.
+def write_log(project_id, message, level="INFO"):
+
+    log_dir = os.path.join(settings.INPUT_PROJECTS_ROOT, project_id)
+    os.makedirs(log_dir, exist_ok=True)  # Ensure the log directory exists
+    
+    log_file_path = os.path.join(log_dir, f"{project_id}_log.json")
+
+    # Construct the log entry
+    log_entry = {
+        "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "level": level,
+        "message": message
+    }
+
+    # Append the log entry to the log file
+    with open(log_file_path, "a") as log_file:
+        log_file.write(json.dumps(log_entry) + "\n")
+
+
+@require_GET  # Restrict to GET requests
+def get_log_file(request, project_id):
+
+    try:
+        # Validate project_id for security
+        if not re.match(r"^[a-zA-Z0-9_-]+$", project_id):
+            return JsonResponse({"error": "Invalid project ID"}, status=400)
+        
+        # Construct the log file path based on your directory structure
+        log_path = os.path.join(settings.INPUT_PROJECTS_ROOT, project_id, f"{project_id}_log.json")
+
+        # Check if the log file exists
+        if os.path.exists(log_path):
+            with open(log_path, 'r') as log_file:
+                return HttpResponse(log_file.read(), content_type="text/plain")
+        else:
+            return JsonResponse({"error": "Log file not found"}, status=404)
+
+    except Exception as e:
+        return JsonResponse({"error": f"An error occurred: {str(e)}"}, status=500)

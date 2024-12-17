@@ -1,0 +1,29 @@
+#initial-message {
+    position: fixed;
+    top: 50px; /* Initial position */
+    right: 10px; /* Align to the right */
+    max-width: 580px; /* Fixed width */
+    background-color: #d9edf7; /* Light blue */
+    color: #31708f; /* Text color */
+    text-align: left; /* Align text to the left */
+    padding: 15px; /* Internal padding */
+    font-size: 14px; /* Font size */
+    font-family: 'Poppins', sans-serif;
+    z-index: 1050; /* Ensure it stays on top */
+    border: 1px solid #bce8f1; /* Border */
+    border-radius: 5px; /* Rounded corners */
+    display: none; /* Hidden by default */
+    opacity: 1; /* Fully visible when displayed */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    cursor: grab; /* Indicates draggable */
+    transition: opacity 0.5s ease; /* Smooth fade-out */
+}
+
+#initial-message:hover {
+    background-color: #f1f5f8; /* Lighten background color when hovered */
+    cursor: pointer; /* Interactivity */
+}
+
+#initial-message:active {
+    cursor: grabbing; /* Change cursor when dragging */
+}
